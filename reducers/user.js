@@ -1,7 +1,8 @@
 export const SET_USER = "SET_USER";
 
-export const setUser = () => ({
+export const setUser = (user) => ({
 	type: SET_USER,
+	payload: user,
 });
 
 const initialState = {
@@ -11,16 +12,17 @@ const initialState = {
 	starred: [],
 	Temp: [],
 	NotRead: [],
+	photoUrl: null,
 };
 
-const reducer = (state = initialState, action) => {
+const user = (state = initialState, action) => {
 	// 리듀서
 	switch (action.type) {
 		case SET_USER:
-			return state;
+			return action.payload;
 		default:
 			return state;
 	}
 };
 
-export default reducer;
+export default user;

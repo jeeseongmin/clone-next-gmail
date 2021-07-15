@@ -9,7 +9,7 @@ const initialState = {
 	thread: {},
 };
 
-const reducer = (state = initialState, action) => {
+const thread = (state = initialState, action) => {
 	switch (action.type) {
 		case SET_THREAD_LIST:
 			return action.payload;
@@ -17,4 +17,4 @@ const reducer = (state = initialState, action) => {
 			return state;
 	}
 };
-export default reducer;
+export default thread;
