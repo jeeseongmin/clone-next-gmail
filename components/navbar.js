@@ -86,7 +86,7 @@ const navbar = () => {
 				{profileModal && (
 					<div class="absolute m-4 pt-8 shadow-lg rounded-lg w-96 h-auto top-19 right-0 border border-gray-300">
 						<div class="w-full flex flex-col justify-content items-center text-center border-b-2 border-gray-100 ">
-							<div class="relative mb-4 border">
+							<div class="relative mb-4">
 								<img
 									src={user.photoUrl}
 									width={80}

@@ -6,16 +6,20 @@ export const setMailList = (mailList) => ({
 });
 
 const initialState = {
-	mail: [],
+	mailList: [],
 };
 
-const reducer = (state = initialState, action) => {
+const mail = (state = initialState, action) => {
 	switch (action.type) {
-		case SET_MAIL_LIST:
-			return action.payload;
+		case SET_MAIL_LIST: {
+			return {
+				...state,
+				mailList: action.payload,
+			};
+		}
 		default:
 			return state;
 	}
 };
 
-export default reducer;
+export default mail;

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
 import { FaRegWindowMinimize } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
 import { IoMdTrash } from "react-icons/io";
@@ -12,8 +13,9 @@ import { setSendMail } from "../reducers/modal";
 const SendMailComponent = () => {
 	const dispatch = useDispatch();
 	const user = useSelector((state) => state.user);
-	const mailList = useSelector((state) => state.mail);
-	const threadList = useSelector((state) => state.thread);
+	const mailList = useSelector((state) => state.mail.mailList);
+	const threadList = useSelector((state) => state.thread.threadList);
+	console.log(mailList, threadList);
 
 	const [mail, setMail] = useState({
 		receiver: "",
@@ -38,10 +40,12 @@ const SendMailComponent = () => {
 		console.log("haha");
 	};
 
-	const sendMail = () => {
+	const sendMail = async function () {
 		if (mail.receiver === "" || mail.title === "" || mail.content === "") {
 			alert("정보를 입력해주세요.");
 		} else {
+			const cp_mail = [...mailList];
+			console.log(cp_mail);
 			const mail_payload = {
 				uuid: uuidv4(),
 				sender: user.email,
@@ -52,11 +56,9 @@ const SendMailComponent = () => {
 				threadId: uuidv4(),
 				index: 1,
 			};
-			const cp = mailList;
-			console.log(cp);
-			cp.push(mail_payload);
-			console.log(cp);
-			dispatch(setMailList(cp));
+			cp_mail.push(mail_payload);
+			console.log(cp_mail);
+			dispatch(setMailList(cp_mail));
 			const list = [];
 			list.push(mail_payload.uuid);
 
@@ -76,7 +78,7 @@ const SendMailComponent = () => {
 	};
 
 	return (
-		<div class="absolute flex flex-col shadow-xl bottom-0 right-11 w-1/3 h-2/3 border border-gray-300">
+		<div class="absolute flex flex-col shadow-xl bottom-0 right-11 w-1/3 h-2/3">
 			<div class="flex flex-row px-4 py-2 justify-between items-center rounded-t-xl bg-gray-800">
 				<div class="text-gray-200">새 메일</div>
 				<div class="flex flex-row text-gray-200">

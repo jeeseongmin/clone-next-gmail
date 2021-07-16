@@ -6,13 +6,17 @@ export const setThreadList = (threads) => ({
 });
 
 const initialState = {
-	thread: [],
+	threadList: [],
 };
 
 const thread = (state = initialState, action) => {
 	switch (action.type) {
-		case SET_THREAD_LIST:
-			return action.payload;
+		case SET_THREAD_LIST: {
+			return {
+				...state,
+				threadList : action.payload,
+			}
+		}
 		default:
 			return state;
 	}

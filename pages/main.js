@@ -15,6 +15,11 @@ const main = () => {
 	const profileModal = useSelector((state) => state.modal.profileModal);
 	const sendMail = useSelector((state) => state.modal.sendMail);
 
+	useEffect(() => {
+		dispatch(setSendMail("close"));
+	}, []);
+	console.log(sendMail);
+
 	return (
 		<div class="min-h-screen flex flex-col relative">
 			<Navbar />
