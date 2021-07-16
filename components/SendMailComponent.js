@@ -78,7 +78,7 @@ const SendMailComponent = () => {
 	};
 
 	return (
-		<div class="absolute flex flex-col shadow-xl bottom-0 right-11 w-1/3 h-2/3">
+		<div class="absolute flex flex-col shadow-xl bottom-0 right-11 w-1/3 h-2/3 ">
 			<div class="flex flex-row px-4 py-2 justify-between items-center rounded-t-xl bg-gray-800">
 				<div class="text-gray-200">새 메일</div>
 				<div class="flex flex-row text-gray-200">
@@ -106,7 +106,7 @@ const SendMailComponent = () => {
 					onChange={(e) => handleChange(e, "title")}
 				/>
 			</div>
-			<div class="w-full border-b-2 border-gray-200">
+			<div class="w-full h-full border-b-2 border-gray-200">
 				<textarea
 					name="contentValue"
 					name="content"
@@ -115,7 +115,7 @@ const SendMailComponent = () => {
 					onChange={(e) => handleChange(e, "content")}
 				/>
 			</div>
-			<div class="py-1 px-4 flex flex-row justify-between items-center">
+			<div class="py-1 px-4 flex flex-row justify-between items-center ">
 				<button
 					onClick={sendMail}
 					class="px-4 py-1.5 rounded-md cursor-pointer bg-blue-500 text-white"
