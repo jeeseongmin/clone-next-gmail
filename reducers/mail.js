@@ -6,7 +6,7 @@ export const setMailList = (mailList) => ({
 });
 
 const initialState = {
-	mail: {},
+	mail: [],
 };
 
 const reducer = (state = initialState, action) => {

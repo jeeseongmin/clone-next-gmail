@@ -1,19 +1,26 @@
-// export const SET_SIDE_BAR = "SET_SIDE_BAR";
+export const SET_IS_LONG_SIDE = "SET_IS_LONG_SIDE";
 export const SET_PROFILE_MODAL = "SET_PROFILE_MODAL";
+export const SET_SEND_MAIL = "SET_SEND_MAIL";
 
-// export const setSideBar = (sidebar) => ({
-// 	type: SET_SIDE_BAR,
-// 	payload: sidebar,
-// });
+export const setIsLongSide = (sidebar) => ({
+	type: SET_IS_LONG_SIDE,
+	payload: sidebar,
+});
 
 export const setProfileModal = (profileModal) => ({
 	type: SET_PROFILE_MODAL,
 	payload: profileModal,
 });
 
+export const setSendMail = (sendMail) => ({
+	type: SET_SEND_MAIL,
+	payload: sendMail,
+});
+
 const initialState = {
-	// sidebar: false,
+	isLongSIde: false,
 	profileModal: false,
+	sendMail: "close",
 };
 
 const modal = (state = initialState, action) => {
@@ -25,12 +32,18 @@ const modal = (state = initialState, action) => {
 				profileModal: action.payload,
 			};
 		}
-		// case SET_SIDE_BAR: {
-		// 	return {
-		// 		...state,
-		// 		sidebar: action.payload,
-		// 	};
-		// }
+		case SET_IS_LONG_SIDE: {
+			return {
+				...state,
+				isLongSide: action.payload,
+			};
+		}
+		case SET_SEND_MAIL: {
+			return {
+				...state,
+				sendMail: action.payload,
+			};
+		}
 		default:
 			return state;
 	}

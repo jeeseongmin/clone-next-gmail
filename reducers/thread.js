@@ -6,7 +6,7 @@ export const setThreadList = (threads) => ({
 });
 
 const initialState = {
-	thread: {},
+	thread: [],
 };
 
 const thread = (state = initialState, action) => {

@@ -3,29 +3,27 @@ import { useDispatch, useSelector } from "react-redux";
 import Router from "next/router";
 import firebase from "../common/firebase";
 import Navbar from "../components/navbar";
+import Leftbar from "../components/Leftbar";
+import MailContainer from "../components/MailContainer";
+import SendMailComponent from "../components/SendMailComponent";
 import setProfileModal from "../reducers/modal";
+import { setSendMail } from "../reducers/modal";
 
 const main = () => {
-	const profileModal = useSelector((state) => state.modal.profileModal);
+	// close, open, mini
 	const dispatch = useDispatch();
+	const profileModal = useSelector((state) => state.modal.profileModal);
+	const sendMail = useSelector((state) => state.modal.sendMail);
 
-	const handleClickNavbar = () => {
-		alert("클릭은 됐어요");
-		if (profileModal) {
-			dispatch(setProfileModal(false));
-		}
-	};
-	// const user = useSelector((state) => state.user);
-	// console.log(user);
-	// useEffect(() => {
-	// 	if (user.email === null) {
-	// 		alert("로그인 후 이용 가능합니다.");
-	// 		Router.push("/");
-	// 	}
-	// }, []);
 	return (
-		<div>
-			<Navbar onClick={(e) => handleClickNavbar}></Navbar>
+		<div class="min-h-screen flex flex-col relative">
+			<Navbar />
+			<div class="flex-1 flex flex-row ">
+				<Leftbar />
+				<MailContainer />
+			</div>
+
+			{sendMail !== "close" && <SendMailComponent />}
 		</div>
 	);
 };

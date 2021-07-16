@@ -4,24 +4,45 @@ import { IoMdSearch } from "react-icons/io";
 import { IoMdOptions } from "react-icons/io";
 import { HiOutlineCamera } from "react-icons/hi";
 import { FiUserPlus } from "react-icons/fi";
+import firebase from "../common/firebase";
+
+import Router from "next/router";
+
 import gmailLogo from "../public/image/gmailLogo.png";
 import { useDispatch, useSelector } from "react-redux";
-import { setSideBar } from "../reducers/modal";
+import { setProfileModal, setIsLongSide } from "../reducers/modal";
+import { setUser } from "../reducers/user";
 import Image from "next/image";
 
 const navbar = () => {
-	const sidebar = useSelector((state) => state.modal.sidebar);
+	const profileModal = useSelector((state) => state.modal.profileModal);
+	const isLongSide = useSelector((state) => state.modal.isLongSide);
 	const user = useSelector((state) => state.user);
-	console.log(user.photoUrl);
 	const dispatch = useDispatch();
 
+	const onToggleProfile = () => {
+		dispatch(setProfileModal(!profileModal));
+	};
+
+	const onToggleSidebar = () => {
+		dispatch(setIsLongSide(!isLongSide));
+	};
+
+	const logOut = () => {
+		firebase.auth().signOut();
+		alert("로그아웃 되었습니다.");
+		dispatch(setProfileModal(false));
+		dispatch(setSideBar(false));
+		Router.push("/");
+	};
+
 	return (
-		<div class="h-19 flex flex-row justify-start items-center shadow-mg border-b-2 border-gray-200">
-			<div class="w-auto mx-3 mr-16 flex flex-row items-center flex-shrink-0">
+		<div class="h-19 flex flex-row justify-start items-center shadow-mg border-b-2 border-gray-200 ">
+			<div class="w-64 mr-2 pr-4 pl-4 flex flex-row items-center flex-shrink-0">
 				<FiMenu
 					size={36}
 					class="mr-6 p-2 cursor-pointer hover:rounded-full hover:bg-gray-300"
-					onClick={() => dispatch(setSideBar(!isToggle))}
+					onClick={onToggleSidebar}
 				/>
 				<Image
 					src={gmailLogo}
@@ -51,15 +72,17 @@ const navbar = () => {
 					/>
 				</div>
 			</div>
-			<div class="relative">
-				<img
-					src={user.photoUrl}
-					width={40}
-					height={40}
-					class="mr-8 object-contain cursor-pointer rounded-full focus:shadow-mg"
-					onClick={() => openProfileModal(!profileModal)}
-					alt="Picture of the author"
-				/>
+			<div class="relative ml-8">
+				{user !== null && (
+					<img
+						src={user.photoUrl}
+						width={40}
+						height={40}
+						class="mr-8 object-contain cursor-pointer rounded-full focus:shadow-mg"
+						onClick={onToggleProfile}
+						alt="Picture of the author"
+					/>
+				)}
 				{profileModal && (
 					<div class="absolute m-4 pt-8 shadow-lg rounded-lg w-96 h-auto top-19 right-0 border border-gray-300">
 						<div class="w-full flex flex-col justify-content items-center text-center border-b-2 border-gray-100 ">
@@ -86,7 +109,10 @@ const navbar = () => {
 							<p class="font-medium">다른 계정 추가</p>
 						</div>
 						<div class="w-full py-4 flex flex-col justify-content items-center text-center border-b-2 border-gray-100 ">
-							<button class="border border-gray-300 rounded-lg px-6 py-2 cursor-pointer">
+							<button
+								class="border border-gray-300 rounded-lg px-6 py-2 cursor-pointer"
+								onClick={logOut}
+							>
 								로그아웃
 							</button>
 						</div>

@@ -13,6 +13,7 @@ import { v4 as uuidv4 } from "uuid";
 
 export default function login() {
 	const dispatch = useDispatch();
+	const user = useSelector((state) => state.user);
 
 	const googleLogin = async function () {
 		var provider = new firebase.auth.GoogleAuthProvider();
