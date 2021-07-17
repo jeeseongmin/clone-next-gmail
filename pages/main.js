@@ -8,6 +8,8 @@ import MailContainer from "../components/MailContainer";
 import SendMailComponent from "../components/SendMailComponent";
 import setProfileModal from "../reducers/modal";
 import { setSendMail } from "../reducers/modal";
+import { setMail } from "../reducers/mail";
+import { setThread } from "../reducers/thread";
 
 const main = () => {
 	// close, open, mini

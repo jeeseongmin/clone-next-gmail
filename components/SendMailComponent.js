@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { FaRegWindowMinimize } from "react-icons/fa";
-import { IoMdClose } from "react-icons/io";
-import { IoMdTrash } from "react-icons/io";
+import { IoMdClose, IoMdTrash } from "react-icons/io";
 import { v4 as uuidv4 } from "uuid";
 import firebase from "../common/firebase";
 import { setThreadList } from "../reducers/thread";

@@ -32,7 +32,7 @@ const navbar = () => {
 		firebase.auth().signOut();
 		alert("로그아웃 되었습니다.");
 		dispatch(setProfileModal(false));
-		dispatch(setSideBar(false));
+		dispatch(setIsLongSide(false));
 		Router.push("/");
 	};
 
