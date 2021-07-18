@@ -5,27 +5,22 @@ import { FaRegWindowMinimize } from "react-icons/fa";
 import { IoMdClose, IoMdTrash } from "react-icons/io";
 import { v4 as uuidv4 } from "uuid";
 import firebase from "../common/firebase";
-import { setThreadList } from "../reducers/thread";
-import { setMailList } from "../reducers/mail";
+import { addThread } from "../reducers/thread";
+import { addMail } from "../reducers/mail";
+import { editUser } from "../reducers/user";
 import { setSendMail } from "../reducers/modal";
 
 const SendMailComponent = () => {
 	const dispatch = useDispatch();
-	const user = useSelector((state) => state.user);
-	const mailList = useSelector((state) => state.mail.mailList);
-	const threadList = useSelector((state) => state.thread.threadList);
-	console.log(mailList, threadList);
-
-	const [mail, setMail] = useState({
-		receiver: "",
-		title: "",
-		content: "",
-	});
+	const userList = useSelector((state) => state.user);
+	// const user = userList[];
+	const mail = useSelector((state) => state.mail);
+	const thread = useSelector((state) => state.thread);
 
 	const handleChange = (e, key) => {
 		const cp = { ...mail };
 		cp[key] = e.target.value;
-		setMail(cp);
+		// setMail(cp);
 	};
 
 	const closeModal = () => {
@@ -34,7 +29,7 @@ const SendMailComponent = () => {
 			title: "",
 			content: "",
 		};
-		setMail(cp);
+		// setMail(cp);
 		dispatch(setSendMail("close"));
 		console.log("haha");
 	};
@@ -43,8 +38,7 @@ const SendMailComponent = () => {
 		if (mail.receiver === "" || mail.title === "" || mail.content === "") {
 			alert("정보를 입력해주세요.");
 		} else {
-			const cp_mail = [...mailList];
-			console.log(cp_mail);
+			// 1. mail object 생성
 			const mail_payload = {
 				uuid: uuidv4(),
 				sender: user.email,
@@ -55,20 +49,19 @@ const SendMailComponent = () => {
 				threadId: uuidv4(),
 				index: 1,
 			};
-			cp_mail.push(mail_payload);
-			console.log(cp_mail);
-			dispatch(setMailList(cp_mail));
-			const list = [];
-			list.push(mail_payload.uuid);
-
+			dispatch(addMail(mail_payload));
+			// 2. thread 생성
 			const thread_payload = {
-				uuid: mail_payload.threadId,
-				MailList: list,
+				uuid: uuidv4(),
+				mailList: [mail_payload.uuid],
 			};
+			dispatch(addThread(thread_payload));
 
-			const cp_thread = threadList;
-			cp_thread.push(thread_payload);
-			dispatch(setThreadList(cp_thread));
+			// 3. user에 해당 thread 공간 만들기
+			const user_info = user[user.uuid];
+
+			const user_payload = {};
+			dispatch(editUser);
 
 			console.log(mailList);
 			console.log(threadList);
@@ -77,7 +70,7 @@ const SendMailComponent = () => {
 	};
 
 	return (
-		<div class="absolute flex flex-col shadow-xl bottom-0 right-11 w-1/3 h-2/3 ">
+		<div class="absolute flex flex-col shadow-xl bottom-0 right-11 w-1/3 h-2/3 rounded-t-xl border border-gray-300">
 			<div class="flex flex-row px-4 py-2 justify-between items-center rounded-t-xl bg-gray-800">
 				<div class="text-gray-200">새 메일</div>
 				<div class="flex flex-row text-gray-200">

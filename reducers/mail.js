@@ -1,6 +1,7 @@
 export const SET_MAIL = "SET_MAIL";
 export const ADD_MAIL = "ADD_MAIL";
-export const EDIT_MAIL = "EDIT_MAIL";
+// export const EDIT_MAIL = "EDIT_MAIL";
+export const RESET_MAIL = "RESET_MAIL";
 
 export const setMail = (mailList) => ({
 	type: SET_MAIL,
@@ -12,13 +13,18 @@ export const addMail = (mailList) => ({
 	data: mailList,
 });
 
-export const editMail = (mailList) => ({
-	type: EDIT_MAIL,
+// export const editMail = (mailList) => ({
+// 	type: EDIT_MAIL,
+// 	data: mailList,
+// });
+
+export const resetMail = (mailList) => ({
+	type: RESET_MAIL,
 	data: mailList,
 });
 
 const initialState = {
-	key: [],
+	keys: [],
 	objs: {},
 };
 
@@ -52,16 +58,22 @@ const mail = (state = initialState, action) => {
 			const objs = { ...state.objs, ...tempObjs };
 			return { ...state, keys, objs };
 		}
-		case EDIT_MAIL: {
-			const { key, name } = data;
+		case RESET_MAIL: {
 			return {
-				...state,
-				objs: {
-					...state.objs,
-					[key]: { ...state.objs[key], name },
-				},
+				keys: [],
+				objs: {},
 			};
 		}
+		// case EDIT_MAIL: {
+		// 	const { key, name } = data;
+		// 	return {
+		// 		...state,
+		// 		objs: {
+		// 			...state.objs,
+		// 			[key]: { ...state.objs[key], name },
+		// 		},
+		// 	};
+		// }
 		default:
 			return state;
 	}

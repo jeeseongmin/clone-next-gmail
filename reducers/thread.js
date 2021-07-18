@@ -1,6 +1,7 @@
 export const SET_THREAD = "SET_THREAD";
 export const ADD_THREAD = "ADD_THREAD";
 export const EDIT_THREAD = "EDIT_THREAD";
+export const RESET_THREAD = "RESET_THREAD";
 
 export const setThread = (threads) => ({
 	type: SET_THREAD,
@@ -12,13 +13,18 @@ export const addThread = (threads) => ({
 	data: threads,
 });
 
-export const editThread = (threads) => ({
+export const editThread = (key, threads) => ({
 	type: EDIT_THREAD,
+	data: { key, threads },
+});
+
+export const resetThread = (threads) => ({
+	type: RESET_THREAD,
 	data: threads,
 });
 
 const initialState = {
-	key: [],
+	MediaKeySession: [],
 	objs: {},
 };
 
@@ -51,13 +57,19 @@ const thread = (state = initialState, action) => {
 			return { ...state, keys, objs };
 		}
 		case EDIT_THREAD: {
-			const { key, name } = data;
+			const { key, threads } = data;
 			return {
 				...state,
 				objs: {
 					...state.objs,
-					[key]: { ...state.objs[key], name },
+					[key]: { ...state.objs[key], threads },
 				},
+			};
+		}
+		case RESET_THREAD: {
+			return {
+				key: [],
+				objs: {},
 			};
 		}
 		default:

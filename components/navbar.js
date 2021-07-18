@@ -1,24 +1,34 @@
 import React, { useState, useEffect } from "react";
-import { FiMenu } from "react-icons/fi";
-import { IoMdSearch } from "react-icons/io";
-import { IoMdOptions } from "react-icons/io";
-import { HiOutlineCamera } from "react-icons/hi";
-import { FiUserPlus } from "react-icons/fi";
-import firebase from "../common/firebase";
-
 import Router from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import firebase from "../common/firebase";
+import { FiMenu, FiUserPlus } from "react-icons/fi";
+import { IoMdSearch, IoMdOptions } from "react-icons/io";
+import { HiOutlineCamera } from "react-icons/hi";
 
 import gmailLogo from "../public/image/gmailLogo.png";
-import { useDispatch, useSelector } from "react-redux";
-import { setProfileModal, setIsLongSide } from "../reducers/modal";
-import { setUser } from "../reducers/user";
+import { resetUser } from "../reducers/user";
+import { resetMail } from "../reducers/mail";
+import { resetThread } from "../reducers/thread";
+import { resetCurrentUser } from "../reducers/currentUser";
+import { resetModal, setProfileModal, setIsLongSide } from "../reducers/modal";
 import Image from "next/image";
 
 const navbar = () => {
+	const dispatch = useDispatch();
+	// const userAuth = firebase.auth().currentUser;
 	const profileModal = useSelector((state) => state.modal.profileModal);
 	const isLongSide = useSelector((state) => state.modal.isLongSide);
-	const user = useSelector((state) => state.user);
-	const dispatch = useDispatch();
+	const userList = useSelector((state) => state.user);
+	// const user = userList[userAuth.uid];
+
+	// 일단 임시로
+	const user = useSelector((state) => state.current_user);
+	// try {
+	// } catch (error) {
+	// 	Router.push("/");
+	// }
+	// console.log(user);
 
 	const onToggleProfile = () => {
 		dispatch(setProfileModal(!profileModal));
@@ -31,13 +41,16 @@ const navbar = () => {
 	const logOut = () => {
 		firebase.auth().signOut();
 		alert("로그아웃 되었습니다.");
-		dispatch(setProfileModal(false));
-		dispatch(setIsLongSide(false));
 		Router.push("/");
+		// dispatch(resetUser());
+		// dispatch(resetMail());
+		// dispatch(resetThread());
+		dispatch(resetCurrentUser());
+		dispatch(resetModal());
 	};
 
 	return (
-		<div class="h-19 flex flex-row justify-start items-center shadow-mg border-b-2 border-gray-200 ">
+		<div class="h-19 flex flex-row justify-start items-center shadow-mg border-b-2 border-gray-100 ">
 			<div class="w-64 mr-2 pr-4 pl-4 flex flex-row items-center flex-shrink-0">
 				<FiMenu
 					size={36}
@@ -73,7 +86,7 @@ const navbar = () => {
 				</div>
 			</div>
 			<div class="relative ml-8">
-				{user !== null && (
+				{user && (
 					<img
 						src={user.photoUrl}
 						width={40}
@@ -84,7 +97,7 @@ const navbar = () => {
 					/>
 				)}
 				{profileModal && (
-					<div class="absolute m-4 pt-8 shadow-lg rounded-lg w-96 h-auto top-19 right-0 border border-gray-300">
+					<div class="z-10 absolute m-4 pt-8 shadow-lg bg-white rounded-lg w-96 h-auto top-19 right-0 border border-gray-300">
 						<div class="w-full flex flex-col justify-content items-center text-center border-b-2 border-gray-100 ">
 							<div class="relative mb-4">
 								<img

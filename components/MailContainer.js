@@ -1,23 +1,29 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import ReceivedList from "./ReceivedList";
+import SentList from "./SentList";
+import TrashList from "./TrashList";
+import StarredList from "./StarredList";
+import TempList from "./TempList";
 
 const MailContainer = () => {
-	return (
-		<div class="flex-1 flex flex-col w-full border border-black">
-			<div class="h-10 px-2 flex justify-between items-center">
-				<div class="h-full w-10 p-2 flex justify-center items-center border border-black">
-					<div class="w-4 h-4 border-2 rounded-sm border-gray-500"></div>
-				</div>
-				<div></div>
-			</div>
-			<div class="h-10 px-2 flex justify-between items-center">
-				<div class="h-full w-full">
-					<div class="h-full w-10 p-2 flex justify-center items-center border border-black">
-						<div class="w-4 h-4 border-2 rounded-sm border-gray-500"></div>
-					</div>
-				</div>
-			</div>
-		</div>
-	);
+	const menuType = useSelector((state) => state.modal.menuType);
+	// const current_user = useSelector((state) => state.user.current_user);
+	// const user = useSelector((state) => state.user.objs[current_user.uuid]);
+
+	if (menuType === "receive") {
+		return <ReceivedList />;
+	} else if (menuType === "star") {
+		return <StarredList />;
+	} else if (menuType === "send") {
+		return <SentList />;
+	} else if (menuType === "temp") {
+		return <TempList />;
+	} else if (menuType === "trash") {
+		return <TrashList />;
+	} else {
+		return <ReceivedList />;
+	}
 };
 
 export default MailContainer;

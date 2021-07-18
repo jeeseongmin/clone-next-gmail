@@ -7,13 +7,19 @@ import firebase from "../common/firebase";
 // import main from "./main";
 
 import { useDispatch, useSelector } from "react-redux";
-import { setUser } from "../reducers/user";
+import { addUser, setUser, resetUser } from "../reducers/user";
+import {
+	setUuid,
+	setName,
+	setPhotoUrl,
+	setEmail,
+} from "../reducers/currentUser";
 
 import { v4 as uuidv4 } from "uuid";
 
 export default function login() {
 	const dispatch = useDispatch();
-	const user = useSelector((state) => state.user);
+	dispatch(resetUser());
 
 	const googleLogin = async function () {
 		var provider = new firebase.auth.GoogleAuthProvider();
@@ -21,17 +27,21 @@ export default function login() {
 			.auth()
 			.signInWithPopup(provider)
 			.then((res) => {
+				console.log(res.user);
 				const payload = {
-					uuid: uuidv4(),
+					uuid: res.user.uid,
 					email: res.user.email,
 					name: res.user.displayName,
 					photoUrl: res.user.photoURL,
-					starred: [],
-					Temp: [],
-					NotRead: [],
+					threadKeys: [],
+					myThread: {},
+					temp: [],
 				};
-				dispatch(setUser(payload));
-				alert("로그인되었습니다!");
+				dispatch(addUser(payload.uuid, payload));
+				dispatch(setUuid(payload.uuid));
+				dispatch(setName(payload.name));
+				dispatch(setPhotoUrl(payload.photoUrl));
+				dispatch(setEmail(payload.email));
 				Router.push("/main");
 			});
 	};
