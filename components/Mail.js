@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Router from "next/router";
 
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import { MdCheckBoxOutlineBlank, MdCheckBox } from "react-icons/md";
@@ -21,13 +22,14 @@ import {
 
 const Mail = (props) => {
 	const dispatch = useDispatch();
-	const { thread, type } = props;
+	const { thread, type, allCheck } = props;
 	const [mailMenu, setMailMenu] = useState(false); // 메일 별 hover 여부
 	const mailList = useSelector((state) => state.mail.objs);
 	const current_user = useSelector((state) => state.current_user);
 	const userList = useSelector((state) => state.user.objs);
 	const checkThread = useSelector((state) => state.modal.checkThread);
-	const isChecked = checkThread.includes(thread);
+	var isChecked = allCheck ? true : checkThread.includes(thread);
+	// const isChecked = checkThread.includes(thread);
 
 	const user = userList[current_user.uuid];
 
@@ -53,10 +55,8 @@ const Mail = (props) => {
 	else if (type === "sent") mailId = sent[sent.length - 1];
 	else if (type === "starred") mailId = starred[starred.length - 1];
 	else if (type === "deleted") mailId = deleted[deleted.length - 1];
-	console.log(mailId);
-	console.log(mailList);
+
 	const currentMail = mailList[mailId];
-	console.log(currentMail);
 	/* 메일 별 날짜 계산 */
 	var date = new Date(currentMail.created);
 	const month = date.getMonth() + 1;
@@ -128,6 +128,8 @@ const Mail = (props) => {
 		cp[thread].isRead = false;
 		dispatch(editMythread(thread, cp));
 	};
+
+	const goDetail = () => {};
 
 	return (
 		<>

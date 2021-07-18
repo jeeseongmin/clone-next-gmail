@@ -47,6 +47,25 @@ export default function login() {
 			});
 	};
 
+	const generalLogin = async function () {
+		const payload = {
+			uuid: "aigb4gee1shi6p9K33wLFSVKJFu2",
+			email: "puppy@gmail.com",
+			name: "Puppy",
+			photoUrl:
+				"https://lh3.googleusercontent.com/a-/AOh14Gjwk0opSq_YqsaT_N72cgQkMpItkgk1PhBV01Ze=s96-c",
+			threadKeys: [],
+			myThread: {},
+			temp: [],
+		};
+		dispatch(addUser(payload.uuid, payload));
+		dispatch(setUuid(payload.uuid));
+		dispatch(setName(payload.name));
+		dispatch(setPhotoUrl(payload.photoUrl));
+		dispatch(setEmail(payload.email));
+		Router.push("/main");
+	};
+
 	return (
 		<div class="w-full min-h-screen border flex justify-center flex-col items-center">
 			<div class="py-12  mb-4 border border-gray-300 rounded-lg flex flex-col justify-center text-center relative">
@@ -62,7 +81,7 @@ export default function login() {
 				<p class="mb-8">Google 계정 사용</p>
 				<div class="w-full mb-8 relative flex justify-center flex-col">
 					<div
-						class="border p-4 w-96 mb-8 mx-12 rounded-mg border-gray-300 shadow-md flex flex-row items-center cursor-pointer"
+						class="border p-4 w-96 mx-12 rounded-mg border-gray-300 shadow-md flex flex-row items-center cursor-pointer"
 						onClick={googleLogin}
 					>
 						<Image
@@ -73,8 +92,21 @@ export default function login() {
 							alt="Picture of the author"
 						/>
 						<div class="w-full flex-shrink text-center">
-							Google 계정으로 로그인
+							내 구글 계정으로 로그인
 						</div>
+					</div>
+					<div
+						class="border p-3 w-96 mb-8 mx-12 rounded-mg border-gray-300 shadow-md flex flex-row items-center cursor-pointer"
+						onClick={generalLogin}
+					>
+						<img
+							src="https://lh3.googleusercontent.com/a-/AOh14Gjwk0opSq_YqsaT_N72cgQkMpItkgk1PhBV01Ze=s96-c"
+							width={40}
+							height={30}
+							class="flex-1 rounded-full"
+							alt="Picture of the author"
+						/>
+						<div class="w-full flex-shrink text-center">Puppy로 로그인</div>
 					</div>
 					<div class="w-96 mx-12 text-left mb-8">
 						내 컴퓨터가 아닌가요? 게스트 모드를 사용하여 비공개로 로그인하세요.{" "}

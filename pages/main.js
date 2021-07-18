@@ -8,8 +8,7 @@ import Navbar from "../components/navbar";
 import Leftbar from "../components/Leftbar";
 import MailContainer from "../components/MailContainer";
 import SendMailComponent from "../components/SendMailComponent";
-// import setProfileModal from "../reducers/modal";
-// import { setSendMail } from "../reducers/modal";
+
 import { setMail, resetMail } from "../reducers/mail";
 import { setThread } from "../reducers/thread";
 import { editMythread, editKeys } from "../reducers/user";
@@ -43,8 +42,8 @@ const main = () => {
 				uuid: mail1,
 				sender: sender_uuid,
 				receiver: receiver_uuid,
-				title: "처음 뵙겠습니다.",
-				content: "지성민이라고 합니다.",
+				title: "Ringle 부트캠프 모집 공고",
+				content: "7월 한달 간, Ringle에서 부트캠프를 개최합니다.",
 				created: new Date(),
 				threadId: thread1,
 			},

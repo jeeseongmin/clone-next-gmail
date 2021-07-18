@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Mail from "./Mail";
 import { useDispatch, useSelector } from "react-redux";
 import { MdRefresh, MdCheckBoxOutlineBlank, MdCheckBox } from "react-icons/md";
@@ -9,10 +9,17 @@ import { resetCheckThread } from "../reducers/modal";
 const ReceivedList = () => {
 	const dispatch = useDispatch();
 	const current_user = useSelector((state) => state.current_user);
+
 	const user = useSelector((state) => state.user.objs[current_user.uuid]);
 	const myThread = user.myThread;
 	const keys = user.threadKeys;
-
+	const [allCheck, setAllCheck] = useState(false);
+	const checkAll = () => {
+		setAllCheck(!allCheck);
+		if (!allCheck) {
+			onRefresh();
+		}
+	};
 	const onRefresh = () => {
 		dispatch(resetCheckThread());
 	};
@@ -24,8 +31,15 @@ const ReceivedList = () => {
 	return (
 		<div class="flex-1 h-full flex flex-col">
 			<div class="w-full h-10 px-2 flex-grow-0 flex-shrink-0 flex flex-row justify-start items-center border-b-2 border-gray-100">
-				<div class="h-full w-10 p-2 flex cursor-pointer rounded-full justify-center items-center hover:bg-gray-100">
-					<MdCheckBoxOutlineBlank size={24} class="text-gray-700" />
+				<div
+					onClick={checkAll}
+					class="h-full w-10 p-2 flex cursor-pointer rounded-full justify-center items-center hover:bg-gray-100"
+				>
+					{allCheck ? (
+						<MdCheckBox size={24} class="text-gray-700" />
+					) : (
+						<MdCheckBoxOutlineBlank size={24} class="text-gray-700" />
+					)}{" "}
 				</div>
 				<RiArrowDropDownFill
 					size={24}
@@ -42,7 +56,7 @@ const ReceivedList = () => {
 				</div>
 			</div>
 			{receivedList.reverse().map((element, index) => {
-				return <Mail thread={element} type="received" />;
+				return <Mail thread={element} type="received" allCheck={allCheck} />;
 			})}
 			{receivedList.length === 0 ? (
 				<div class="w-full h-10 px-2 flex justify-center items-center border-b-2 border-gray-100">

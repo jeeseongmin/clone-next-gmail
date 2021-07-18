@@ -157,7 +157,7 @@ const Leftbar = () => {
 						</button>
 					)}
 				</div>
-				<div
+				{/* <div
 					onClick={() => onMenuClick("temp")}
 					onMouseOver={() => onHoverMenu(4)}
 					onMouseOut={() => onHoverMenu(0)}
@@ -186,7 +186,7 @@ const Leftbar = () => {
 							임시보관함
 						</button>
 					)}
-				</div>
+				</div> */}
 				<div
 					onClick={() => onMenuClick("deleted")}
 					onMouseOver={() => onHoverMenu(5)}
