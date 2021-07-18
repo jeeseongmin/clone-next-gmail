@@ -11,6 +11,7 @@ import { MdSend } from "react-icons/md";
 import { AiFillStar } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsLongSide, setSendMail, setMenuType } from "../reducers/modal";
+import { resetCheckThread } from "../reducers/modal";
 
 const Leftbar = () => {
 	const [hoverMenu, setHoverMenu] = useState(0);
@@ -18,13 +19,16 @@ const Leftbar = () => {
 	const dispatch = useDispatch();
 	const menuType = useSelector((state) => state.modal.menuType);
 	const isLongSide = useSelector((state) => state.modal.isLongSide);
-
+	const onRefresh = () => {
+		dispatch(resetCheckThread());
+	};
 	const onHoverMenu = (num) => {
 		setHoverMenu(num);
 	};
 
 	const onMenuClick = (type) => {
 		dispatch(setMenuType(type));
+		onRefresh();
 	};
 
 	return (
@@ -49,12 +53,14 @@ const Leftbar = () => {
 						class="object-contain"
 						alt="Picture of the author"
 					/>
-					{isLongSide && <button class="ml-4 font-medium">편지쓰기</button>}
+					{isLongSide && (
+						<button class="ml-2 text-sm font-medium">편지쓰기</button>
+					)}
 				</div>
 			</div>
 			<div class="w-full flex flex-col pb-4 border-b-2 border-gray-100">
 				<div
-					onClick={() => onMenuClick("receive")}
+					onClick={() => onMenuClick("received")}
 					onMouseOver={() => onHoverMenu(1)}
 					onMouseOut={() => onHoverMenu(0)}
 					class={"flex flex-row mb-1 items-center cursor-pointer relative "}
@@ -62,7 +68,7 @@ const Leftbar = () => {
 					<div
 						class={
 							"absolute bottom-0 left-0 h-10 w-56 z-0 origin-left " +
-							(menuType === "receive"
+							(menuType === "received"
 								? " bg-red-100 "
 								: hoverMenu === 1
 								? " bg-gray-200 "
@@ -76,14 +82,14 @@ const Leftbar = () => {
 						size={24}
 						class={
 							"z-10 m-1.5 mx-2 ml-6 " +
-							(menuType === "receive" ? "text-red-500" : "text-gray-500")
+							(menuType === "received" ? "text-red-500" : "text-gray-500")
 						}
 					/>
 					{isLongSide && (
 						<button
 							class={
-								"z-10 ml-4 " +
-								(menuType === "receive" ? "font-bold text-red-500" : "")
+								"z-10 ml-2 text-sm " +
+								(menuType === "received" ? "font-bold text-red-500" : "")
 							}
 						>
 							받은편지함
@@ -91,7 +97,7 @@ const Leftbar = () => {
 					)}
 				</div>
 				<div
-					onClick={() => onMenuClick("star")}
+					onClick={() => onMenuClick("starred")}
 					onMouseOver={() => onHoverMenu(2)}
 					onMouseOut={() => onHoverMenu(0)}
 					class={"flex flex-row mb-1 items-center cursor-pointer relative  "}
@@ -99,7 +105,7 @@ const Leftbar = () => {
 					<div
 						class={
 							"absolute bottom-0 left-0 h-10 w-56 z-0 origin-left " +
-							(menuType === "star"
+							(menuType === "starred"
 								? "bg-gray-200 "
 								: hoverMenu === 2
 								? " bg-gray-200 "
@@ -112,14 +118,17 @@ const Leftbar = () => {
 					<AiFillStar size={24} class="z-10 m-1.5 mx-2 ml-6 text-gray-500" />
 					{isLongSide && (
 						<button
-							class={"z-10 ml-4 " + (menuType === "star" ? "font-bold" : "")}
+							class={
+								"z-10 ml-2 text-sm " +
+								(menuType === "starred" ? "font-bold" : "")
+							}
 						>
 							별표편지함
 						</button>
 					)}
 				</div>
 				<div
-					onClick={() => onMenuClick("send")}
+					onClick={() => onMenuClick("sent")}
 					onMouseOver={() => onHoverMenu(3)}
 					onMouseOut={() => onHoverMenu(0)}
 					class={"flex flex-row mb-1 items-center cursor-pointer relative "}
@@ -127,7 +136,7 @@ const Leftbar = () => {
 					<div
 						class={
 							"absolute bottom-0 left-0 h-10 w-56 z-0 origin-left " +
-							(menuType === "send"
+							(menuType === "sent"
 								? "bg-gray-200 "
 								: hoverMenu === 3
 								? " bg-gray-200 "
@@ -140,7 +149,9 @@ const Leftbar = () => {
 					<MdSend size={24} class="z-10 m-1.5 mx-2 ml-6 text-gray-500" />
 					{isLongSide && (
 						<button
-							class={"z-10 ml-4 " + (menuType === "send" ? "font-bold" : "")}
+							class={
+								"z-10 ml-2 text-sm " + (menuType === "sent" ? "font-bold" : "")
+							}
 						>
 							보낸편지함
 						</button>
@@ -168,14 +179,16 @@ const Leftbar = () => {
 					<IoMdDocument size={24} class="z-10 m-1.5 mx-2 ml-6 text-gray-500" />
 					{isLongSide && (
 						<button
-							class={"z-10 ml-4 " + (menuType === "temp" ? "font-bold" : "")}
+							class={
+								"z-10 ml-2 text-sm " + (menuType === "temp" ? "font-bold" : "")
+							}
 						>
 							임시보관함
 						</button>
 					)}
 				</div>
 				<div
-					onClick={() => onMenuClick("trash")}
+					onClick={() => onMenuClick("deleted")}
 					onMouseOver={() => onHoverMenu(5)}
 					onMouseOut={() => onHoverMenu(0)}
 					class={" flex flex-row mb-1 items-center cursor-pointer relative "}
@@ -183,7 +196,7 @@ const Leftbar = () => {
 					<div
 						class={
 							"absolute bottom-0 left-0 h-10 w-56 z-0 origin-left " +
-							(menuType === "trash"
+							(menuType === "deleted"
 								? "bg-gray-200 "
 								: hoverMenu === 5
 								? " bg-gray-200 "
@@ -196,7 +209,10 @@ const Leftbar = () => {
 					<IoMdTrash size={24} class="z-10 m-1.5 mx-2 ml-6 text-gray-500" />
 					{isLongSide && (
 						<button
-							class={"z-10 ml-4 " + (menuType === "trash" ? "font-bold" : "")}
+							class={
+								"z-10 ml-2 text-sm " +
+								(menuType === "deleted" ? "font-bold" : "")
+							}
 						>
 							휴지통
 						</button>

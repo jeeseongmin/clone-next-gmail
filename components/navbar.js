@@ -45,7 +45,7 @@ const navbar = () => {
 		// dispatch(resetUser());
 		// dispatch(resetMail());
 		// dispatch(resetThread());
-		dispatch(resetCurrentUser());
+		// dispatch(resetCurrentUser());
 		dispatch(resetModal());
 	};
 

@@ -7,64 +7,98 @@ import { v4 as uuidv4 } from "uuid";
 import firebase from "../common/firebase";
 import { addThread } from "../reducers/thread";
 import { addMail } from "../reducers/mail";
-import { editUser } from "../reducers/user";
+import { editUser, addUser } from "../reducers/user";
 import { setSendMail } from "../reducers/modal";
+import { editMythread, editKeys } from "../reducers/user";
 
 const SendMailComponent = () => {
+	const [mail, setMail] = useState({
+		title: "",
+		receiver: "",
+		content: "",
+	});
 	const dispatch = useDispatch();
-	const userList = useSelector((state) => state.user);
-	// const user = userList[];
-	const mail = useSelector((state) => state.mail);
-	const thread = useSelector((state) => state.thread);
+	const user = useSelector((state) => state.current_user);
+	const userList = useSelector((state) => state.user.objs);
+
+	const mailList = useSelector((state) => state.mail);
 
 	const handleChange = (e, key) => {
 		const cp = { ...mail };
 		cp[key] = e.target.value;
-		// setMail(cp);
+		setMail(cp);
 	};
 
 	const closeModal = () => {
-		const cp = {
-			receiver: "",
+		setMail({
 			title: "",
+			receiver: "",
 			content: "",
-		};
-		// setMail(cp);
+		});
 		dispatch(setSendMail("close"));
-		console.log("haha");
 	};
 
 	const sendMail = async function () {
 		if (mail.receiver === "" || mail.title === "" || mail.content === "") {
 			alert("정보를 입력해주세요.");
 		} else {
+			// 0. user 생성
+			const receiver = {
+				uuid: uuidv4(),
+				email: mail.receiver,
+				name: "unknown",
+				photoUrl: "https://i.stack.imgur.com/l60Hf.png",
+				threadKeys: [],
+				myThread: {},
+				temp: [],
+			};
+			dispatch(addUser(receiver.uuid, receiver));
 			// 1. mail object 생성
 			const mail_payload = {
 				uuid: uuidv4(),
-				sender: user.email,
-				receiver: mail.receiver,
+				sender: user.uuid,
+				receiver: receiver.uuid,
 				title: mail.title,
 				content: mail.content,
-				created: firebase.firestore.Timestamp.now().seconds,
+				created: new Date(),
 				threadId: uuidv4(),
-				index: 1,
 			};
-			dispatch(addMail(mail_payload));
-			// 2. thread 생성
+			dispatch(addMail(mail_payload.uuid, mail_payload));
+			// // 2. thread 생성
 			const thread_payload = {
-				uuid: uuidv4(),
+				uuid: mail_payload.threadId,
 				mailList: [mail_payload.uuid],
 			};
-			dispatch(addThread(thread_payload));
+			dispatch(addThread(thread_payload.uuid, thread_payload));
 
 			// 3. user에 해당 thread 공간 만들기
-			const user_info = user[user.uuid];
-
-			const user_payload = {};
-			dispatch(editUser);
-
-			console.log(mailList);
-			console.log(threadList);
+			var newPayload1 = { ...userList[user.uuid].myThread };
+			newPayload1[thread_payload.uuid] = {
+				sent: [mail_payload.uuid],
+				received: [],
+				starred: [],
+				deleted: [],
+				isRead: true,
+			};
+			var newPayload2 = {};
+			newPayload2[thread_payload.uuid] = {
+				sent: [],
+				received: [mail_payload.uuid],
+				starred: [],
+				deleted: [],
+				isRead: false,
+			};
+			dispatch(
+				editKeys(user.uuid, [
+					...userList[user.uuid].threadKeys,
+					thread_payload.uuid,
+				])
+			);
+			dispatch(editKeys(receiver.uuid, [thread_payload.uuid]));
+			dispatch(editMythread(user.uuid, newPayload1));
+			dispatch(editMythread(receiver.uuid, newPayload2));
+			closeModal();
+			// console.log(userList);
 			alert("메일이 전송되었습니다!");
 		}
 	};

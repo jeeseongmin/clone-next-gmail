@@ -16,9 +16,7 @@ import { editMythread, editKeys } from "../reducers/user";
 
 const main = () => {
 	// firebase에서 불러오는 user id 찾기.
-	// close, open, mini
 	const dispatch = useDispatch();
-	const userList = useSelector((state) => state.user);
 	// 나중에는 firebaseAuth의 uuid로 바꾸기.
 	const user = useSelector((state) => state.current_user);
 	const sendMail = useSelector((state) => state.modal.sendMail);
@@ -80,14 +78,14 @@ const main = () => {
 			received: [],
 			starred: [],
 			deleted: [],
-			isRead: true,
+			isRead: false,
 		};
 		payload3[thread2] = {
 			sent: [mail2],
 			received: [],
 			starred: [],
 			deleted: [],
-			isRead: true,
+			isRead: false,
 		};
 		var payload4 = {};
 		payload4[thread1] = {
@@ -95,14 +93,14 @@ const main = () => {
 			received: [mail1],
 			starred: [],
 			deleted: [],
-			isRead: true,
+			isRead: false,
 		};
 		payload4[thread2] = {
 			sent: [],
 			received: [mail2],
 			starred: [],
 			deleted: [],
-			isRead: true,
+			isRead: false,
 		};
 		dispatch(editKeys(sender_uuid, [thread1, thread2]));
 		dispatch(editKeys(receiver_uuid, [thread1, thread2]));

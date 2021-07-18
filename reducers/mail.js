@@ -8,9 +8,9 @@ export const setMail = (mailList) => ({
 	data: mailList,
 });
 
-export const addMail = (mailList) => ({
+export const addMail = (key, mailList) => ({
 	type: ADD_MAIL,
-	data: mailList,
+	data: { key, mailList },
 });
 
 // export const editMail = (mailList) => ({
@@ -46,15 +46,15 @@ const mail = (state = initialState, action) => {
 			return { ...state, keys, objs };
 		}
 		case ADD_MAIL: {
+			const { key, mailList } = data;
 			const keys = state.keys;
-			keys.push(...data.map((obj) => (obj["key"] = obj.uuid)));
-			const tempObjs = data.reduce(
-				(nextObjs, obj) => ({
-					...nextObjs,
-					[obj["key"]]: obj,
-				}),
-				{}
-			);
+			if (!keys.includes(key)) {
+				keys.push(key);
+			}
+
+			const tempObjs = {};
+			tempObjs[key] = mailList;
+
 			const objs = { ...state.objs, ...tempObjs };
 			return { ...state, keys, objs };
 		}

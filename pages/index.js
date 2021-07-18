@@ -8,6 +8,7 @@ import firebase from "../common/firebase";
 
 import { useDispatch, useSelector } from "react-redux";
 import { addUser, setUser, resetUser } from "../reducers/user";
+import { resetModal } from "../reducers/modal";
 import {
 	setUuid,
 	setName,
@@ -20,6 +21,7 @@ import { v4 as uuidv4 } from "uuid";
 export default function login() {
 	const dispatch = useDispatch();
 	dispatch(resetUser());
+	dispatch(resetModal());
 
 	const googleLogin = async function () {
 		var provider = new firebase.auth.GoogleAuthProvider();
@@ -27,7 +29,6 @@ export default function login() {
 			.auth()
 			.signInWithPopup(provider)
 			.then((res) => {
-				console.log(res.user);
 				const payload = {
 					uuid: res.user.uid,
 					email: res.user.email,

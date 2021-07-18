@@ -8,9 +8,9 @@ export const setThread = (threads) => ({
 	data: threads,
 });
 
-export const addThread = (threads) => ({
+export const addThread = (key, threads) => ({
 	type: ADD_THREAD,
-	data: threads,
+	data: { key, threads },
 });
 
 export const editThread = (key, threads) => ({
@@ -44,16 +44,16 @@ const thread = (state = initialState, action) => {
 			return { ...state, keys, objs };
 		}
 		case ADD_THREAD: {
+			const { key, threads } = data;
 			const keys = state.keys;
-			keys.push(...data.map((obj) => (obj["key"] = obj.uuid)));
-			const tempObjs = data.reduce(
-				(nextObjs, obj) => ({
-					...nextObjs,
-					[obj["key"]]: obj,
-				}),
-				{}
-			);
-			const objs = { ...state.objs, ...tempObjs };
+			if (!keys.includes(key)) {
+				keys.push(key);
+			}
+
+			const tempObjs = {};
+			tempObjs[key] = threads;
+
+			const objs = { ...state.objsm, ...tempObjs };
 			return { ...state, keys, objs };
 		}
 		case EDIT_THREAD: {

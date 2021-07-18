@@ -58,7 +58,7 @@ const initialState = {
 	isLongSIde: false,
 	profileModal: false,
 	sendMail: "close",
-	menuType: "receive",
+	menuType: "received",
 	checkThread: [],
 };
 
@@ -122,7 +122,7 @@ const modal = (state = initialState, action) => {
 				isLongSIde: false,
 				profileModal: false,
 				sendMail: "close",
-				menuType: "receive",
+				menuType: "received",
 				checkThread: [],
 			};
 		}

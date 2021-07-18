@@ -6,7 +6,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { RiArrowDropDownFill } from "react-icons/ri";
 import { resetCheckThread } from "../reducers/modal";
 
-const StarredList = () => {
+const DeletedList = () => {
 	const dispatch = useDispatch();
 	const current_user = useSelector((state) => state.current_user);
 	const user = useSelector((state) => state.user.objs[current_user.uuid]);
@@ -17,9 +17,10 @@ const StarredList = () => {
 		dispatch(resetCheckThread());
 	};
 
-	const starredList = keys.filter(function (element, index) {
-		return myThread[element].starred.length > 0;
+	const deletedList = keys.filter(function (element, index) {
+		return myThread[element].deleted.length > 0;
 	});
+	console.log(deletedList);
 
 	return (
 		<div class="flex-1 h-full flex flex-col">
@@ -41,12 +42,12 @@ const StarredList = () => {
 					<BsThreeDotsVertical size={18} class="cursor-pointer text-gray-700" />
 				</div>
 			</div>
-			{starredList.reverse().map((element, index) => {
-				return <Mail thread={element} type="starred" />;
+			{deletedList.reverse().map((element, index) => {
+				return <Mail thread={element} type="deleted" />;
 			})}
-			{starredList.length === 0 ? (
+			{deletedList.length === 0 ? (
 				<div class="w-full h-10 px-2 flex justify-center items-center border-b-2 border-gray-100">
-					별표 표시된 메일이 없습니다.
+					현재 삭제된 메일이 없습니다.
 				</div>
 			) : (
 				<></>
@@ -55,4 +56,4 @@ const StarredList = () => {
 	);
 };
 
-export default StarredList;
+export default DeletedList;
