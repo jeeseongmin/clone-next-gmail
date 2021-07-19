@@ -191,7 +191,7 @@ const Leftbar = () => {
 					onClick={() => onMenuClick("deleted")}
 					onMouseOver={() => onHoverMenu(5)}
 					onMouseOut={() => onHoverMenu(0)}
-					class={" flex flex-row mb-1 items-center cursor-pointer relative "}
+					class={"flex flex-row mb-1 items-center cursor-pointer relative "}
 				>
 					<div
 						class={
