@@ -1,22 +1,12 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Router from "next/router";
 import Link from "next/link";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import { MdCheckBoxOutlineBlank, MdCheckBox } from "react-icons/md";
 import { FaMailBulk } from "react-icons/fa";
 import { editMythread } from "../reducers/user";
-import {
-	addCheckThread,
-	deleteCheckThread,
-	resetCheckThread,
-} from "../reducers/modal";
-import {
-	IoMdMailOpen,
-	IoMdSend,
-	IoMdDocument,
-	IoMdTrash,
-} from "react-icons/io";
+import { addCheckThread, deleteCheckThread } from "../reducers/modal";
+import { IoMdMailOpen, IoMdTrash } from "react-icons/io";
 // import { IoTime } from "react-icons/io5";
 // import { HiSave } from "react-icons/hi";
 
@@ -84,8 +74,8 @@ const Mail = (props) => {
 			// const _starredList = cp[thread].starred;
 			// _starredList.pop();
 			const _starredList = cp[thread].starred.filter(function (element, index) {
-				return element !== mailId;	
-			})
+				return element !== mailId;
+			});
 			cp[thread].starred = _starredList;
 			dispatch(editMythread(thread, cp));
 		}

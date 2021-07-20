@@ -143,7 +143,9 @@ const ThreadComponent = (props) => {
 				<h3 class="text-lg font-medium">{mailTitle}</h3>
 			</div>
 			{mailList.map((element, index) => {
-				return <MailComponent key={element} mailId={element} />;
+				var open = false;
+				if (index === mailList.length - 1) open = true;
+				return <MailComponent key={element} mailId={element} open={open} />;
 			})}
 		</div>
 	);

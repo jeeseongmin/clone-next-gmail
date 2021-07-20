@@ -4,11 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { FaRegWindowMinimize } from "react-icons/fa";
 import { IoMdClose, IoMdTrash } from "react-icons/io";
 import { v4 as uuidv4 } from "uuid";
-import firebase from "../common/firebase";
 import { addThread } from "../reducers/thread";
 import { addMail } from "../reducers/mail";
 import { setSendMail } from "../reducers/modal";
-import { editUser, addUser, editMythread, editKeys } from "../reducers/user";
+import { addUser, editMythread, editKeys } from "../reducers/user";
 
 const SendMailComponent = () => {
 	const [mail, setMail] = useState({
@@ -20,7 +19,6 @@ const SendMailComponent = () => {
 	const user = useSelector((state) => state.current_user);
 	const userList = useSelector((state) => state.user.objs);
 	const threadList = useSelector((state) => state.thread);
-	const mailList = useSelector((state) => state.mail);
 
 	const handleChange = (e, key) => {
 		const cp = { ...mail };
@@ -98,7 +96,6 @@ const SendMailComponent = () => {
 			dispatch(editMythread(receiver.uuid, newPayload2));
 			closeModal();
 			// console.log(userList);
-			console.log(threadList);
 			alert("메일이 전송되었습니다!");
 		}
 	};

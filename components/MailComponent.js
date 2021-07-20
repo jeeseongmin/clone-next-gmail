@@ -1,28 +1,19 @@
-import React, { useState, useRef } from "react";
-import gmailLogo from "../public/image/gmailLogo.png";
-import {
-	MdRefresh,
-	MdCheckBoxOutlineBlank,
-	MdCheckBox,
-	MdReply,
-} from "react-icons/md";
+import React, { useState, useRef, useEffect } from "react";
+import { MdReply } from "react-icons/md";
 import { IoMdTrash } from "react-icons/io";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import { RiArrowDropDownFill } from "react-icons/ri";
-import { resetCheckThread } from "../reducers/modal";
 import { useDispatch, useSelector } from "react-redux";
 
 import { addThread } from "../reducers/thread";
 import { addMail } from "../reducers/mail";
-import { setSendMail } from "../reducers/modal";
-import { editUser, addUser, editMythread, editKeys } from "../reducers/user";
+import { addUser, editMythread } from "../reducers/user";
 import { v4 as uuidv4 } from "uuid";
-import router from "next/router";
 
 const MailComponent = (props) => {
 	const dispatch = useDispatch();
 	const [isOpenReply, setIsOpenReply] = useState(false);
+	const open = props.open;
 
 	const closeReplyModal = () => {
 		setIsOpenReply(false);
@@ -77,9 +68,17 @@ const MailComponent = (props) => {
 		hour * 1 < 13
 			? "오전 " + hour * 1 + ":" + minute
 			: "오후 " + (hour * 1 - 12) + ":" + minute;
-	console.log(hour, time);
 	const dateToText = month + "월 " + day + "일 " + time;
 	const dateToText_toggle = year + ". " + month + ". " + day + ". " + time;
+
+	// 열려있는 것 분류하기.
+	useEffect(() => {
+		if (open) {
+			setToggle(open);
+		} else if (starredList.includes(mailId)) {
+			setToggle(true);
+		}
+	}, []);
 
 	const handleChange = (e, key) => {
 		const cp = { ...replyContent };
@@ -110,7 +109,6 @@ const MailComponent = (props) => {
 	};
 
 	const sendReply = async function () {
-		console.log(replyContent);
 		if (replyContent.receiver === "" || replyContent.content === "") {
 			alert("정보를 입력해주세요.");
 		} else {
@@ -143,7 +141,6 @@ const MailComponent = (props) => {
 				mailList: [mail_payload.uuid],
 			};
 			dispatch(addThread(thread_payload.uuid, thread_payload));
-			console.log("mail ", mailObjs);
 
 			// 3. user에 해당 thread 공간 만들기
 			// 보내는 사람의 myThread 구성
