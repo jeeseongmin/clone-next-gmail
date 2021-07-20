@@ -93,9 +93,10 @@ const init = () => {
 	}, []);
 
 	return (
-		<Layout>
-			<MailContainer class="z-0" />
-		</Layout>
+		<div></div>
+		// <Layout>
+		// 	<MailContainer class="z-0" />
+		// </Layout>
 	);
 };
 
