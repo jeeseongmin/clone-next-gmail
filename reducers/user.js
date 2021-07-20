@@ -74,9 +74,12 @@ const user = (state = initialState, action) => {
 			return { ...state, keys, objs };
 		}
 		case ADD_USER: {
+			console.log("ADD_USER");
 			const keys = state.keys;
+			console.log(data);
 			// 기존에 없는 경우
 			if (!keys.includes(data.uuid)) {
+				console.log("없");
 				keys.push(data.uuid);
 
 				const tempObjs = state.objs;
@@ -90,7 +93,9 @@ const user = (state = initialState, action) => {
 			}
 			// 이미 있는 경우
 			else {
-				const tempObjs = state.objs;
+				console.log("있!");
+				const tempObjs = { ...state.objs };
+				console.log(tempObjs);
 				tempObjs[data.uuid] = {
 					uuid: data.uuid,
 					email: data.email,
@@ -101,11 +106,11 @@ const user = (state = initialState, action) => {
 					temp: state.objs[data.uuid].temp,
 				};
 
-				const objs = {
-					keys: keys,
-					objs: tempObjs,
-				};
-				return { ...objs };
+				// const objs = {
+				// 	keys: keys,
+				// 	objs: tempObjs,
+				// };
+				return { keys: keys, objs: tempObjs };
 			}
 		}
 

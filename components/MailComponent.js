@@ -95,22 +95,26 @@ const MailComponent = (props) => {
 				mailList: [mail_payload.uuid],
 			};
 			dispatch(addThread(thread_payload.uuid, thread_payload));
+			console.log("mail ", mailObjs);
+			// 여기까지는 문제 없음!!!
 
 			// 3. user에 해당 thread 공간 만들기
-			var newPayload1 = { ...userObjs[current_user.uuid].myThread };
+			var newPayload1 = userObjs[current_user.uuid].myThread;
 			newPayload1[thread_payload.uuid].sent = [
 				...userObjs[current_user.uuid].myThread.sent,
 				mail_payload.uuid,
 			];
 			newPayload1[thread_payload.uuid].isRead = true;
+			console.log("newPayload1", newPayload1);
 
-			var newPayload2 = { ...userObjs[receiver.uuid].myThread };
+			var newPayload2 = userObjs[receiver.uuid].myThread;
 			newPayload2[thread_payload.uuid].received = [
 				...userObjs[current_user.uuid].myThread.received,
 				mail_payload.uuid,
 			];
 			newPayload2[thread_payload.uuid].isRead = false;
 
+			console.log("newPayload2", newPayload2);
 			dispatch(
 				editKeys(current_user.uuid, [
 					...userList[current_user.uuid].threadKeys,
@@ -123,11 +127,12 @@ const MailComponent = (props) => {
 					thread_payload.uuid,
 				])
 			);
+			console.log(userObjs);
 			dispatch(editMythread(current_user.uuid, newPayload1));
 			dispatch(editMythread(receiver.uuid, newPayload2));
 			console.log(userObjs);
 
-			closeModal();
+			closeReplyModal();
 
 			// alert("메일이 전송되었습니다!");
 		}
