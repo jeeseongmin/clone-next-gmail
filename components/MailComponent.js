@@ -18,6 +18,7 @@ import { addMail } from "../reducers/mail";
 import { setSendMail } from "../reducers/modal";
 import { editUser, addUser, editMythread, editKeys } from "../reducers/user";
 import { v4 as uuidv4 } from "uuid";
+import router from "next/router";
 
 const MailComponent = (props) => {
 	const dispatch = useDispatch();
@@ -54,6 +55,21 @@ const MailComponent = (props) => {
 		receiver: mail.sender === current_user ? mail.receiver : mail.sender,
 		content: "",
 	});
+
+	/* 메일 별 날짜 계산 */
+	var date = new Date(mail.created);
+	const year = date.getFullYear();
+	const month = date.getMonth() + 1;
+	const day = date.getDate();
+	const hour = date.getHours();
+	const minute = date.getMinutes();
+	const time =
+		hour * 1 < 13
+			? "오전 " + hour * 1 + ":" + minute
+			: "오후 " + (hour * 1 - 12) + ":" + minute;
+	console.log(hour, time);
+	const dateToText = month + "월 " + day + "일 " + time;
+	const dateToText_toggle = year + ". " + month + ". " + day + ". " + time;
 
 	const handleChange = (e, key) => {
 		const cp = { ...replyContent };
@@ -149,7 +165,7 @@ const MailComponent = (props) => {
 							</div>
 						)}
 						<div class="h-full flex flex-col items-center justify-center ">
-							<p class="text-xs">6월 20일 (일) 오전 6:15</p>
+							<p class="text-xs">{dateToText}</p>
 						</div>
 					</div>
 					<div class="w-38 h-full flex-shrink flex flex-row justify-between">

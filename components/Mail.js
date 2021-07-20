@@ -28,8 +28,11 @@ const Mail = (props) => {
 	const current_user = useSelector((state) => state.current_user);
 	const userList = useSelector((state) => state.user.objs);
 	const checkThread = useSelector((state) => state.modal.checkThread);
+	const threadObjs = useSelector((state) => state.thread.objs);
 	var isChecked = allCheck ? true : checkThread.includes(thread);
-	// const isChecked = checkThread.includes(thread);
+
+	const firstId = threadObjs[thread].mailList[0];
+	const title = mailList[firstId].title;
 
 	const user = userList[current_user.uuid];
 
@@ -57,6 +60,7 @@ const Mail = (props) => {
 	else if (type === "deleted") mailId = deleted[deleted.length - 1];
 
 	const currentMail = mailList[mailId];
+
 	/* 메일 별 날짜 계산 */
 	var date = new Date(currentMail.created);
 	const month = date.getMonth() + 1;
@@ -208,13 +212,18 @@ const Mail = (props) => {
 						)}
 						<Link href="mail/[threadId]" as={`mail/${thread}`}>
 							<div class=" h-full p-2 flex-1 text-sm flex justify-start items-center">
+								{type === "sent" && (
+									<span class="text-xs px-1 py-0.5 mr-3 rounded-md bg-gray-300 text-gray-600 items-center">
+										받은편지함
+									</span>
+								)}
 								<p
 									class={
 										"h-full overflow-hidden " +
 										(isRead ? "font-noraml" : "font-bold")
 									}
 								>
-									{currentMail.title}
+									{title}
 								</p>
 							</div>
 						</Link>

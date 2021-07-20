@@ -21,7 +21,6 @@ const ThreadComponent = (props) => {
 	const current_user = useSelector((state) => state.current_user);
 	const userList = useSelector((state) => state.user.objs);
 	const mailListObj = useSelector((state) => state.thread.objs);
-	console.log(mailListObj);
 	const menuType = useSelector((state) => state.modal.menuType);
 	const mailObjs = useSelector((state) => state.mail.objs);
 	const recentMail = mailListObj[thread].mailList[0];
@@ -36,15 +35,29 @@ const ThreadComponent = (props) => {
 		sortList();
 	}, []);
 
+	useEffect(() => {
+		sortList();
+	}, [mailListObj[thread]]);
+
 	// 메일들을 created 순서대로 정렬
 	const sortList = () => {
-		console.log(mailListObj[thread]);
-		const cp = mailListObj[thread].mailList;
-		const notDeletedCp = cp.filter(function (element, index) {
-			console.log(element, index);
-			return !deletedList.includes(element);
-		});
-		setMailList(notDeletedCp);
+		if(menuType === "deleted") {
+			const cp = mailListObj[thread].mailList;
+			const notDeletedCp = cp.filter(function (element, index) {
+				console.log(element, index);
+				return deletedList.includes(element);
+			});
+			setMailList(notDeletedCp);
+		} else {
+			console.log(mailListObj[thread]);
+			const cp = mailListObj[thread].mailList;
+			const notDeletedCp = cp.filter(function (element, index) {
+				console.log(element, index);
+				return !deletedList.includes(element);
+			});
+			setMailList(notDeletedCp);
+
+		}
 	};
 
 	const onDeleteThread = () => {
