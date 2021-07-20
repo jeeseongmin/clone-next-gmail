@@ -3,7 +3,12 @@ export const SET_EMAIL = "SET_EMAIL";
 export const SET_NAME = "SET_NAME";
 export const RESET_CURRENTUSER = "RESET_CURRENTUSER";
 export const SET_PHOTO_URL = "SET_PHOTO_URL";
+export const SET_CURRENT_USER = "SET_CURRENT_USER";
 
+export const setCurrentUser = (user) => ({
+	type: SET_CURRENT_USER,
+	payload: user,
+});
 export const setPhotoUrl = (photoUrl) => ({
 	type: SET_PHOTO_URL,
 	payload: photoUrl,
@@ -28,6 +33,7 @@ export const resetCurrentUser = (user) => ({
 	type: RESET_CURRENTUSER,
 	payload: user,
 });
+
 const initialState = {
 	uuid: "",
 	email: "",
@@ -37,6 +43,11 @@ const initialState = {
 
 const current_user = (state = initialState, action) => {
 	switch (action.type) {
+		case SET_CURRENT_USER: {
+			console.log(action.payload);
+			return action.payload;
+		}
+
 		case SET_UUID: {
 			return {
 				...state,

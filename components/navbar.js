@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Router from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import firebase from "../common/firebase";
@@ -20,15 +20,24 @@ const navbar = () => {
 	const profileModal = useSelector((state) => state.modal.profileModal);
 	const isLongSide = useSelector((state) => state.modal.isLongSide);
 	const userList = useSelector((state) => state.user);
-	// const user = userList[userAuth.uid];
+	const profileRef = useRef(null);
+
+	// ref 이외의 다른 부분을 클릭했을 때에 일어나야 하는 일
+	useEffect(() => {
+		if (!profileModal) return;
+		function handleClick(e) {
+			if (profileRef.current.contains(e.target)) {
+			} else {
+				dispatch(setProfileModal(false));
+			}
+		}
+		window.addEventListener("click", handleClick);
+
+		return () => window.removeEventListener("click", handleClick);
+	}, [profileModal]);
 
 	// 일단 임시로
 	const user = useSelector((state) => state.current_user);
-	// try {
-	// } catch (error) {
-	// 	Router.push("/");
-	// }
-	// console.log(user);
 
 	const onToggleProfile = () => {
 		dispatch(setProfileModal(!profileModal));
@@ -50,7 +59,10 @@ const navbar = () => {
 	};
 
 	return (
-		<div class="h-19 flex flex-row justify-start items-center shadow-mg border-b-2 border-gray-100 ">
+		<div
+			// onClick={(e) => onProfileHide(e)}
+			class="h-19 flex flex-row justify-start items-center shadow-mg border-b-2 border-gray-100 "
+		>
 			<div class="w-64 mr-2 pr-4 pl-4 flex flex-row items-center flex-shrink-0">
 				<FiMenu
 					size={36}
@@ -85,19 +97,19 @@ const navbar = () => {
 					/>
 				</div>
 			</div>
-			<div class="relative ml-8">
+			<div ref={profileRef} class="relative ml-8 z-30">
 				{user && (
 					<img
 						src={user.photoUrl}
 						width={40}
 						height={40}
-						class="mr-8 object-contain cursor-pointer rounded-full focus:shadow-mg"
+						class="z-30 mr-8 object-contain cursor-pointer rounded-full focus:shadow-mg "
 						onClick={onToggleProfile}
 						alt="Picture of the author"
 					/>
 				)}
 				{profileModal && (
-					<div class="z-10 absolute m-4 pt-8 shadow-lg bg-white rounded-lg w-96 h-auto top-19 right-0 border border-gray-300">
+					<div class="z-30 absolute m-4 pt-8 shadow-lg bg-white rounded-lg w-96 h-auto top-19 right-0 border border-gray-300">
 						<div class="w-full flex flex-col justify-content items-center text-center border-b-2 border-gray-100 ">
 							<div class="relative mb-4">
 								<img

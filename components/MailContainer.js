@@ -5,9 +5,8 @@ import SentList from "./SentList";
 import DeletedList from "./DeletedList";
 import StarredList from "./StarredList";
 import TempList from "./TempList";
-import MailDetail from "./MailDetail";
 
-const MailContainer = () => {
+const MailContainer = (props) => {
 	const menuType = useSelector((state) => state.modal.menuType);
 	// const current_user = useSelector((state) => state.user.current_user);
 	// const user = useSelector((state) => state.user.objs[current_user.uuid]);

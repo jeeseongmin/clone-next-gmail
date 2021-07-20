@@ -27,7 +27,6 @@ const DeletedList = () => {
 	const deletedList = keys.filter(function (element, index) {
 		return myThread[element].deleted.length > 0;
 	});
-	console.log(deletedList);
 
 	return (
 		<div class="flex-1 h-full flex flex-col">
@@ -57,7 +56,14 @@ const DeletedList = () => {
 				</div>
 			</div>
 			{deletedList.reverse().map((element, index) => {
-				return <Mail thread={element} type="deleted" allCheck={allCheck} />;
+				return (
+					<Mail
+						key={element}
+						thread={element}
+						type="deleted"
+						allCheck={allCheck}
+					/>
+				);
 			})}
 			{deletedList.length === 0 ? (
 				<div class="w-full h-10 px-2 flex justify-center items-center border-b-2 border-gray-100">

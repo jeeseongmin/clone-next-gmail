@@ -24,7 +24,7 @@ export const resetThread = (threads) => ({
 });
 
 const initialState = {
-	MediaKeySession: [],
+	keys: [],
 	objs: {},
 };
 
@@ -32,29 +32,45 @@ const thread = (state = initialState, action) => {
 	const { type, data } = action;
 	switch (type) {
 		case SET_THREAD: {
-			const keys = data.map((obj) => (obj["key"] = obj.uuid));
+			const keys = data.map((obj) => obj.uuid);
+			const objs = {};
+			const _objs = data.map((obj) => (objs[obj.uuid] = obj));
 
-			const objs = data.reduce(
-				(nextObjs, obj) => ({
-					...nextObjs,
-					[obj["key"]]: obj,
-				}),
-				{}
-			);
-			return { ...state, keys, objs };
+			return {
+				keys: keys,
+				objs: objs,
+			};
 		}
 		case ADD_THREAD: {
 			const { key, threads } = data;
 			const keys = state.keys;
+			// 기존에 없다면 새로 추가
 			if (!keys.includes(key)) {
+				console.log("없엉!");
 				keys.push(key);
+				const objs = { ...state.objs };
+				console.log(objs);
+				objs[key] = threads;
+				return {
+					keys: [...keys],
+					objs: {
+						...objs,
+					},
+				};
+			} else {
+				console.log("있엉!");
+				const objs = { ...state.objs };
+				objs[key] = {
+					uuid: threads.uuid,
+					mailList: [...state.objs[key].mailList, threads.mailList[0]],
+				};
+				return {
+					keys: [...keys],
+					objs: {
+						...objs,
+					},
+				};
 			}
-
-			const tempObjs = {};
-			tempObjs[key] = threads;
-
-			const objs = { ...state.objsm, ...tempObjs };
-			return { ...state, keys, objs };
 		}
 		case EDIT_THREAD: {
 			const { key, threads } = data;

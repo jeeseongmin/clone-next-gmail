@@ -42,7 +42,7 @@ const SentList = () => {
 				</div>
 			</div>
 			{sentList.reverse().map((element, index) => {
-				return <Mail thread={element} type="sent" />;
+				return <Mail key={element} thread={element} type="sent" />;
 			})}
 			{sentList.length === 0 ? (
 				<div class="w-full h-10 px-2 flex justify-center items-center border-b-2 border-gray-100">

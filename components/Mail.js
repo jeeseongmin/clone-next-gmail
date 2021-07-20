@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Router from "next/router";
-
+import Link from "next/link";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import { MdCheckBoxOutlineBlank, MdCheckBox } from "react-icons/md";
 import { FaMailBulk } from "react-icons/fa";
@@ -103,10 +103,6 @@ const Mail = (props) => {
 		}
 	};
 
-	const restoreThread = () => {
-		const cp = { ...myThread };
-	};
-
 	const onDeleteThread = () => {
 		const cp = { ...myThread };
 		const _deletedList = cp[thread].deleted;
@@ -128,8 +124,6 @@ const Mail = (props) => {
 		cp[thread].isRead = false;
 		dispatch(editMythread(thread, cp));
 	};
-
-	const goDetail = () => {};
 
 	return (
 		<>
@@ -189,32 +183,41 @@ const Mail = (props) => {
 							// </div>
 						)}
 
-						{type === "received" && (
-							<div class=" w-52 p-2 pr-8 text-sm flex justify-center items-center">
-								<p class={"truncate " + (isRead ? "font-noraml" : "font-bold")}>
-									{userList[currentMail.sender].name} (
-									{userList[currentMail.sender].email})
-								</p>
-							</div>
+						{(type === "received" || type === "starred") && (
+							<Link href="mail/[threadId]" as={`mail/${thread}`}>
+								<div class=" w-52 p-2 pr-8 text-sm flex justify-center items-center">
+									<p
+										class={"truncate " + (isRead ? "font-noraml" : "font-bold")}
+									>
+										{userList[currentMail.sender].name} (
+										{userList[currentMail.sender].email})
+									</p>
+								</div>
+							</Link>
 						)}
 						{type === "sent" && (
-							<div class=" w-52 p-2 pr-8 text-sm flex justify-center items-center">
-								<p class={"truncate " + (isRead ? "font-noraml" : "font-bold")}>
-									받는 사람 : {userList[currentMail.receiver].email}
+							<Link href="mail/[threadId]" as={`mail/${thread}`}>
+								<div class=" w-52 p-2 pr-8 text-sm flex justify-center items-center">
+									<p
+										class={"truncate " + (isRead ? "font-noraml" : "font-bold")}
+									>
+										받는 사람 : {userList[currentMail.receiver].email}
+									</p>
+								</div>
+							</Link>
+						)}
+						<Link href="mail/[threadId]" as={`mail/${thread}`}>
+							<div class=" h-full p-2 flex-1 text-sm flex justify-start items-center">
+								<p
+									class={
+										"h-full overflow-hidden " +
+										(isRead ? "font-noraml" : "font-bold")
+									}
+								>
+									{currentMail.title}
 								</p>
 							</div>
-						)}
-
-						<div class=" h-full p-2 flex-1 text-sm flex justify-start items-center">
-							<p
-								class={
-									"h-full overflow-hidden " +
-									(isRead ? "font-noraml" : "font-bold")
-								}
-							>
-								{currentMail.title}
-							</p>
-						</div>
+						</Link>
 						<div
 							class={
 								"w-48 flex justify-end items-center " +

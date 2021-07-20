@@ -7,6 +7,7 @@ import {
 	IoMdDocument,
 	IoMdTrash,
 } from "react-icons/io";
+import Router from "next/router";
 import { MdSend } from "react-icons/md";
 import { AiFillStar } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
@@ -28,6 +29,7 @@ const Leftbar = () => {
 
 	const onMenuClick = (type) => {
 		dispatch(setMenuType(type));
+		Router.push("/main");
 		onRefresh();
 	};
 
@@ -38,7 +40,7 @@ const Leftbar = () => {
 				(isLongSide ? "w-64 mr-2 pr-4" : "w-19 relative mr-1")
 			}
 		>
-			<div class="my-3 mb-8 ml-1">
+			<div class="my-3 mb-4 ml-1">
 				<div
 					onClick={() => dispatch(setSendMail("open"))}
 					class={
@@ -63,11 +65,11 @@ const Leftbar = () => {
 					onClick={() => onMenuClick("received")}
 					onMouseOver={() => onHoverMenu(1)}
 					onMouseOut={() => onHoverMenu(0)}
-					class={"flex flex-row mb-1 items-center cursor-pointer relative "}
+					class={"flex flex-row items-center cursor-pointer relative "}
 				>
 					<div
 						class={
-							"absolute bottom-0 left-0 h-10 w-56 z-0 origin-left " +
+							"absolute bottom left-0 h-8 w-56 z-0 origin-left " +
 							(menuType === "received"
 								? " bg-red-100 "
 								: hoverMenu === 1
@@ -100,11 +102,11 @@ const Leftbar = () => {
 					onClick={() => onMenuClick("starred")}
 					onMouseOver={() => onHoverMenu(2)}
 					onMouseOut={() => onHoverMenu(0)}
-					class={"flex flex-row mb-1 items-center cursor-pointer relative  "}
+					class={"flex flex-row -mt-1 items-center cursor-pointer relative  "}
 				>
 					<div
 						class={
-							"absolute bottom-0 left-0 h-10 w-56 z-0 origin-left " +
+							"absolute bottom left-0 h-8 w-56 z-0 origin-left " +
 							(menuType === "starred"
 								? "bg-gray-200 "
 								: hoverMenu === 2
@@ -131,11 +133,11 @@ const Leftbar = () => {
 					onClick={() => onMenuClick("sent")}
 					onMouseOver={() => onHoverMenu(3)}
 					onMouseOut={() => onHoverMenu(0)}
-					class={"flex flex-row mb-1 items-center cursor-pointer relative "}
+					class={"flex flex-row -mt-1 items-center cursor-pointer relative "}
 				>
 					<div
 						class={
-							"absolute bottom-0 left-0 h-10 w-56 z-0 origin-left " +
+							"absolute bottom left-0 h-8 w-56 z-0 origin-left " +
 							(menuType === "sent"
 								? "bg-gray-200 "
 								: hoverMenu === 3
@@ -191,11 +193,11 @@ const Leftbar = () => {
 					onClick={() => onMenuClick("deleted")}
 					onMouseOver={() => onHoverMenu(5)}
 					onMouseOut={() => onHoverMenu(0)}
-					class={"flex flex-row mb-1 items-center cursor-pointer relative "}
+					class={"flex flex-row -mt-1 items-center cursor-pointer relative "}
 				>
 					<div
 						class={
-							"absolute bottom-0 left-0 h-10 w-56 z-0 origin-left " +
+							"absolute bottom left-0 h-8 w-56 z-0 origin-left " +
 							(menuType === "deleted"
 								? "bg-gray-200 "
 								: hoverMenu === 5

@@ -42,7 +42,7 @@ const StarredList = () => {
 				</div>
 			</div>
 			{starredList.reverse().map((element, index) => {
-				return <Mail thread={element} type="starred" />;
+				return <Mail key={element} thread={element} type="starred" />;
 			})}
 			{starredList.length === 0 ? (
 				<div class="w-full h-10 px-2 flex justify-center items-center border-b-2 border-gray-100">

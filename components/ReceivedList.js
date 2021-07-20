@@ -56,7 +56,14 @@ const ReceivedList = () => {
 				</div>
 			</div>
 			{receivedList.reverse().map((element, index) => {
-				return <Mail thread={element} type="received" allCheck={allCheck} />;
+				return (
+					<Mail
+						key={element}
+						thread={element}
+						type="received"
+						allCheck={allCheck}
+					/>
+				);
 			})}
 			{receivedList.length === 0 ? (
 				<div class="w-full h-10 px-2 flex justify-center items-center border-b-2 border-gray-100">

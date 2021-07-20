@@ -7,9 +7,8 @@ import { v4 as uuidv4 } from "uuid";
 import firebase from "../common/firebase";
 import { addThread } from "../reducers/thread";
 import { addMail } from "../reducers/mail";
-import { editUser, addUser } from "../reducers/user";
 import { setSendMail } from "../reducers/modal";
-import { editMythread, editKeys } from "../reducers/user";
+import { editUser, addUser, editMythread, editKeys } from "../reducers/user";
 
 const SendMailComponent = () => {
 	const [mail, setMail] = useState({
@@ -20,7 +19,7 @@ const SendMailComponent = () => {
 	const dispatch = useDispatch();
 	const user = useSelector((state) => state.current_user);
 	const userList = useSelector((state) => state.user.objs);
-
+	const threadList = useSelector((state) => state.thread);
 	const mailList = useSelector((state) => state.mail);
 
 	const handleChange = (e, key) => {
@@ -52,7 +51,7 @@ const SendMailComponent = () => {
 				myThread: {},
 				temp: [],
 			};
-			dispatch(addUser(receiver.uuid, receiver));
+			dispatch(addUser(receiver));
 			// 1. mail object 생성
 			const mail_payload = {
 				uuid: uuidv4(),
@@ -99,6 +98,7 @@ const SendMailComponent = () => {
 			dispatch(editMythread(receiver.uuid, newPayload2));
 			closeModal();
 			// console.log(userList);
+			console.log(threadList);
 			alert("메일이 전송되었습니다!");
 		}
 	};

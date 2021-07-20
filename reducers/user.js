@@ -11,9 +11,9 @@ export const setUser = (users) => ({
 	data: users,
 });
 
-export const addUser = (key, users) => ({
+export const addUser = (users) => ({
 	type: ADD_USER,
-	data: { key, users },
+	data: users,
 });
 
 export const editUser = (key, mailList) => ({
@@ -60,6 +60,7 @@ const initialState = {
 const user = (state = initialState, action) => {
 	const { type, data } = action;
 	switch (type) {
+		// data라고 하면
 		case SET_USER: {
 			const keys = data.map((obj) => (obj["key"] = obj.uuid));
 
@@ -73,18 +74,41 @@ const user = (state = initialState, action) => {
 			return { ...state, keys, objs };
 		}
 		case ADD_USER: {
-			const { key, users } = data;
 			const keys = state.keys;
-			if (!keys.includes(key)) {
-				keys.push(key);
+			// 기존에 없는 경우
+			if (!keys.includes(data.uuid)) {
+				keys.push(data.uuid);
+
+				const tempObjs = state.objs;
+				tempObjs[data.uuid] = data;
+
+				const objs = {
+					keys: keys,
+					objs: tempObjs,
+				};
+				return { ...objs };
 			}
+			// 이미 있는 경우
+			else {
+				const tempObjs = state.objs;
+				tempObjs[data.uuid] = {
+					uuid: data.uuid,
+					email: data.email,
+					name: data.name,
+					photoUrl: state.objs[data.uuid].photoUrl,
+					threadKeys: state.objs[data.uuid].threadKeys,
+					myThread: state.objs[data.uuid].myThread,
+					temp: state.objs[data.uuid].temp,
+				};
 
-			const tempObjs = {};
-			tempObjs[key] = users;
-
-			const objs = { ...state.objs, ...tempObjs };
-			return { ...state, keys, objs };
+				const objs = {
+					keys: keys,
+					objs: tempObjs,
+				};
+				return { ...objs };
+			}
 		}
+
 		case EDIT_USER: {
 			const { key, mailList } = data;
 			return {
