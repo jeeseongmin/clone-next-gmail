@@ -81,8 +81,11 @@ const Mail = (props) => {
 		// 없애기
 		if (isStarred) {
 			const cp = { ...myThread };
-			const _starredList = cp[thread].starred;
-			_starredList.pop();
+			// const _starredList = cp[thread].starred;
+			// _starredList.pop();
+			const _starredList = cp[thread].starred.filter(function (element, index) {
+				return element !== mailId;	
+			})
 			cp[thread].starred = _starredList;
 			dispatch(editMythread(thread, cp));
 		}

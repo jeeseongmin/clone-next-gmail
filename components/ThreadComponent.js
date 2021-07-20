@@ -41,7 +41,7 @@ const ThreadComponent = (props) => {
 
 	// 메일들을 created 순서대로 정렬
 	const sortList = () => {
-		if(menuType === "deleted") {
+		if (menuType === "deleted") {
 			const cp = mailListObj[thread].mailList;
 			const notDeletedCp = cp.filter(function (element, index) {
 				console.log(element, index);
@@ -56,7 +56,6 @@ const ThreadComponent = (props) => {
 				return !deletedList.includes(element);
 			});
 			setMailList(notDeletedCp);
-
 		}
 	};
 
@@ -99,7 +98,7 @@ const ThreadComponent = (props) => {
 		Router.back();
 	};
 	return (
-		<div class="flex-1 h-full flex flex-col">
+		<div class="flex-1 w-full h-full flex flex-col">
 			<div class="w-full h-10 px-2 flex-grow-0 flex-shrink-0 flex flex-row justify-start items-center border-b border-gray-200">
 				<div
 					onClick={() => Router.back()}

@@ -55,7 +55,7 @@ export const deleteCheckThread = (thread) => ({
 });
 
 const initialState = {
-	isLongSIde: false,
+	isLongSide: true,
 	profileModal: false,
 	sendMail: "close",
 	menuType: "received",
@@ -119,7 +119,7 @@ const modal = (state = initialState, action) => {
 		}
 		case RESET_MODAL: {
 			return {
-				isLongSIde: false,
+				isLongSide: true,
 				profileModal: false,
 				sendMail: "close",
 				menuType: "received",

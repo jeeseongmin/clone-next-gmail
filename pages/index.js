@@ -5,16 +5,11 @@ import Logo2 from "../public/image/logo2.png";
 import Router from "next/router";
 import firebase from "../common/firebase";
 import { useDispatch, useSelector } from "react-redux";
-import {
-	addUser,
-	resetUser,
-} from "../reducers/user";
-import {  resetMail } from "../reducers/mail";
-import {  resetThread } from "../reducers/thread";
+import { addUser, resetUser } from "../reducers/user";
+import { resetMail } from "../reducers/mail";
+import { resetThread } from "../reducers/thread";
 import { resetModal } from "../reducers/modal";
-import {
-	setCurrentUser,
-} from "../reducers/currentUser";
+import { setCurrentUser } from "../reducers/currentUser";
 
 export default function login() {
 	const dispatch = useDispatch();
@@ -59,7 +54,7 @@ export default function login() {
 				<p class="mb-8">Google 계정 사용</p>
 				<div class="w-full mb-8 relative flex justify-center flex-col">
 					<div
-						class="border p-4 w-96 mx-12 rounded-mg border-gray-300 shadow-md flex flex-row items-center cursor-pointer"
+						class="border p-4 mb-8 w-96 mx-12 rounded-mg border-gray-300 shadow-md flex flex-row items-center cursor-pointer"
 						onClick={googleLogin}
 					>
 						<Image
@@ -70,10 +65,10 @@ export default function login() {
 							alt="Picture of the author"
 						/>
 						<div class="w-full flex-shrink text-center">
-							내 구글 계정으로 로그인
+							구글 계정으로 로그인
 						</div>
 					</div>
-					<div
+					{/* <div
 						class="border p-3 w-96 mb-8 mx-12 rounded-mg border-gray-300 shadow-md flex flex-row items-center cursor-pointer"
 						onClick={() => alert("본인 계정으로 진행해주세요.")}
 					>
@@ -85,7 +80,7 @@ export default function login() {
 							alt="Picture of the author"
 						/>
 						<div class="w-full flex-shrink text-center">Puppy로 로그인</div>
-					</div>
+					</div> */}
 					<div class="w-96 mx-12 text-left mb-8">
 						내 컴퓨터가 아닌가요? 게스트 모드를 사용하여 비공개로 로그인하세요.
 						<span class="text-blue-600 cursor-pointer">

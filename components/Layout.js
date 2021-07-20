@@ -17,7 +17,7 @@ const Layout = (props) => {
 	};
 
 	return (
-		<div class="z-20 min-h-screen w-full flex flex-col relative">
+		<div class="z-20 min-h-screen w-full flex flex-col relative overflow-hidden">
 			<Navbar />
 			<div onClick={onProfileHide} class="w-full flex">
 				<Leftbar />
