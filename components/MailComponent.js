@@ -23,12 +23,14 @@ const MailComponent = (props) => {
 			content: "",
 		});
 	};
-
+	
+	const current_user = useSelector((state) => state.current_user);
 	const openReplyModal = () => {
 		setIsOpenReply(true);
 		setReplyContent({
 			title: "",
-			receiver: mail.sender === current_user ? mail.receiver : mail.sender,
+			// 이 메일의 보내는 사람이 나였으면, 나한테 보내면 안되니깐, 받는 사람한테 줘야함.
+			receiver: mail.sender === current_user.uuid ? mail.receiver : mail.sender,
 			content: "",
 		});
 	};
@@ -38,11 +40,12 @@ const MailComponent = (props) => {
 
 	const mailId = props.mailId;
 	const replyRef = useRef(null);
-	const current_user = useSelector((state) => state.current_user);
 	const mailObjs = useSelector((state) => state.mail.objs);
 	const userObjs = useSelector((state) => state.user.objs);
+	console.log(userObjs);
 	const threadObjs = useSelector((state) => state.thread.objs);
 	const mail = mailObjs[mailId];
+	console.log(mail);
 	const type = mail.receiver === current_user.uuid ? "received" : "sent";
 
 	const starredList =
@@ -122,6 +125,7 @@ const MailComponent = (props) => {
 				myThread: {},
 				temp: [],
 			};
+			console.log("receiver", receiver);
 			dispatch(addUser(receiver));
 			// 1. mail object 생성
 			const mail_payload = {
@@ -197,7 +201,7 @@ const MailComponent = (props) => {
 											({userObjs[current_user.uuid].email})
 										</span>
 									</p>
-									<p class="text-xs">{userObjs[mail.sender].email}에게</p>
+									<p class="text-xs">{userObjs[mail.receiver].email}에게</p>
 								</div>
 							)}
 							<div class="h-full w-48 flex flex-col items-right justify-right text-right">
@@ -252,7 +256,7 @@ const MailComponent = (props) => {
 							<div class="flex-1 h-full p-4 flex flex-col border border-gray-200 rounded-md shadow-lg justify-start relative">
 								<div class="h-6 text-gray-500 text-xs">
 									받는 사람 :{" "}
-									{userObjs[mail.sender].email === current_user.email
+									{userObjs[mail.receiver].email === current_user.email
 										? userObjs[mail.receiver].name +
 										  " (" +
 										  userObjs[mail.receiver].email +

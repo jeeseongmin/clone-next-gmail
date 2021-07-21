@@ -46,7 +46,7 @@ const initialState = {
 	objs: {
 		PuwwM38EJ7RziL9NRk2cwejibL83: {
 			uuid: "PuwwM38EJ7RziL9NRk2cwejibL83",
-			email: "21500706@handong.edu",
+			email: "student123@gmail.com",
 			name: "지성민",
 			photoUrl:
 				"https://lh3.googleusercontent.com/a-/AOh14Gi3enYZxCwL9Aoe1tBEQ-swzbGErjEN3aVnxnVN=s96-c",
@@ -77,6 +77,7 @@ const user = (state = initialState, action) => {
 			const keys = state.keys;
 			// 기존에 없는 경우
 			if (!keys.includes(data.uuid)) {
+				console.log("없는 유저입니다.");
 				keys.push(data.uuid);
 
 				const tempObjs = state.objs;
@@ -90,6 +91,7 @@ const user = (state = initialState, action) => {
 			}
 			// 이미 있는 경우
 			else {
+				console.log("이미 있는 유저입니다.");
 				const tempObjs = { ...state.objs };
 				tempObjs[data.uuid] = {
 					uuid: data.uuid,
@@ -121,6 +123,8 @@ const user = (state = initialState, action) => {
 		}
 		case EDIT_KEYS: {
 			const { key, threadKeys } = data;
+			console.log("EDIT_KEYS");
+			console.log(state);
 			return {
 				...state,
 				objs: {
@@ -131,6 +135,8 @@ const user = (state = initialState, action) => {
 		}
 		case EDIT_MYTHREAD: {
 			const { key, myThread } = data;
+			console.log("EDIT_MYTHREAD");
+			console.log(state);
 			return {
 				...state,
 				objs: {
@@ -155,7 +161,7 @@ const user = (state = initialState, action) => {
 				objs: {
 					PuwwM38EJ7RziL9NRk2cwejibL83: {
 						uuid: "PuwwM38EJ7RziL9NRk2cwejibL83",
-						email: "21500706@handong.edu",
+						email: "student123@gmail.com",
 						name: "지성민",
 						photoUrl:
 							"https://lh3.googleusercontent.com/a-/AOh14Gi3enYZxCwL9Aoe1tBEQ-swzbGErjEN3aVnxnVN=s96-c",

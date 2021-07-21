@@ -49,6 +49,8 @@ const SendMailComponent = () => {
 				myThread: {},
 				temp: [],
 			};
+			console.log("receiver", receiver);
+			console.log(userList);
 			dispatch(addUser(receiver));
 			// 1. mail object 생성
 			const mail_payload = {
