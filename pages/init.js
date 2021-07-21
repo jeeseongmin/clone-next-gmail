@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import Layout from "../components/Layout";
 import MailContainer from "../components/MailContainer";
 import { useDispatch, useSelector } from "react-redux";
-import LoadingIcon from "../public/image/loading.svg";
 import Router from "next/router";
 import Head from "next/head";
 

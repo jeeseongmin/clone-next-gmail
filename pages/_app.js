@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import "tailwindcss/tailwind.css";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
-import Router from "next/router";
 
 import configureStore from "../config/store";
 const { store, persistor } = configureStore();

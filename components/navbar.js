@@ -1,17 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import Router from "next/router";
 import { useDispatch, useSelector } from "react-redux";
-import firebase from "../common/firebase";
 import { FiMenu, FiUserPlus } from "react-icons/fi";
 import { IoMdSearch, IoMdOptions } from "react-icons/io";
 import { HiOutlineCamera } from "react-icons/hi";
 
 import gmailLogo from "../public/image/gmailLogo.png";
-import { resetUser } from "../reducers/user";
-import { resetMail } from "../reducers/mail";
-import { resetThread } from "../reducers/thread";
-import { resetCurrentUser } from "../reducers/currentUser";
 import { resetModal, setProfileModal, setIsLongSide } from "../reducers/modal";
+import { resetUser } from "../reducers/user";
 import Image from "next/image";
 
 const navbar = () => {
@@ -48,21 +44,14 @@ const navbar = () => {
 	};
 
 	const logOut = () => {
-		firebase.auth().signOut();
 		alert("로그아웃 되었습니다.");
 		Router.push("/");
-		// dispatch(resetUser());
-		// dispatch(resetMail());
-		// dispatch(resetThread());
-		// dispatch(resetCurrentUser());
 		dispatch(resetModal());
+		// dispatch(resetUser());
 	};
 
 	return (
-		<div
-			// onClick={(e) => onProfileHide(e)}
-			class="h-19 flex flex-row justify-start items-center shadow-mg border-b-2 border-gray-100 "
-		>
+		<div class="h-19 flex flex-row justify-start items-center shadow-mg border-b-2 border-gray-100 ">
 			<div class="w-64 mr-2 pr-4 pl-4 flex flex-row items-center flex-shrink-0">
 				<FiMenu
 					size={36}

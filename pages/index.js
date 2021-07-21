@@ -42,8 +42,7 @@ export default function login() {
 			uuid: "bRPleP6CYGMgNqWTEFzjdEpAQYZ2",
 			email: "peration0422@gmail.com",
 			name: "sungmin jee",
-			photoUrl:
-				"https://lh3.googleusercontent.com/a-/AOh14Gjwk0opSq_YqsaT_N72cgQkMpItkgk1PhBV01Ze=s96-c",
+			photoUrl: "https://lh3.googleusercontent.com/a-/AOh14Gjwk0opSq_YqsaT_N72cgQkMpItkgk1PhBV01Ze=s96-c",
 			threadKeys: [],
 			myThread: {},
 			temp: [],

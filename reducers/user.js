@@ -42,10 +42,10 @@ export const editTemp = (temp) => ({
 });
 
 const initialState = {
-	keys: ["PuwwM38EJ7RziL9NRk2cwejibL83"],
+	keys: ["ppap1223445131312"],
 	objs: {
 		PuwwM38EJ7RziL9NRk2cwejibL83: {
-			uuid: "PuwwM38EJ7RziL9NRk2cwejibL83",
+			uuid: "ppap1223445131312",
 			email: "student123@gmail.com",
 			name: "지성민",
 			photoUrl:
@@ -157,10 +157,10 @@ const user = (state = initialState, action) => {
 		}
 		case RESET_USER: {
 			return {
-				keys: ["PuwwM38EJ7RziL9NRk2cwejibL83"],
+				keys: ["ppap1223445131312"],
 				objs: {
 					PuwwM38EJ7RziL9NRk2cwejibL83: {
-						uuid: "PuwwM38EJ7RziL9NRk2cwejibL83",
+						uuid: "ppap1223445131312",
 						email: "student123@gmail.com",
 						name: "지성민",
 						photoUrl:
