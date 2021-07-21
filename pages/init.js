@@ -2,8 +2,9 @@ import React, { useEffect } from "react";
 import Layout from "../components/Layout";
 import MailContainer from "../components/MailContainer";
 import { useDispatch, useSelector } from "react-redux";
-
+import LoadingIcon from "../public/image/loading.svg";
 import Router from "next/router";
+import Head from "next/head";
 
 import { v4 as uuidv4 } from "uuid";
 import { editMythread, editKeys, addUser } from "../reducers/user";
@@ -97,10 +98,16 @@ const init = () => {
 	}, []);
 
 	return (
-		<div></div>
-		// <Layout>
-		// 	<MailContainer class="z-0" />
-		// </Layout>
+		<>
+			<Head>
+				<title>Loading</title>
+				<meta
+					name="google-site-verification"
+					content="5OoTdfiuCbpvW90pjrj64IgiDszvnTSYT0qm9PUEluY"
+				/>
+			</Head>
+			<div>{/* <img src={LoadingIcon} /> */}</div>
+		</>
 	);
 };
 
