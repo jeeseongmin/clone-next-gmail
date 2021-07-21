@@ -20,24 +20,37 @@ export default function login() {
 	dispatch(resetMail());
 
 	const googleLogin = async function () {
-		var provider = new firebase.auth.GoogleAuthProvider();
-		firebase
-			.auth()
-			.signInWithPopup(provider)
-			.then((res) => {
-				const login_payload = {
-					uuid: res.user.uid,
-					email: res.user.email,
-					name: res.user.displayName,
-					photoUrl: res.user.photoURL,
-					threadKeys: [],
-					myThread: {},
-					temp: [],
-				};
-				dispatch(addUser(login_payload));
-				dispatch(setCurrentUser(login_payload));
-				Router.push("/init");
-			});
+		// var provider = new firebase.auth.GoogleAuthProvider();
+		// firebase
+		// 	.auth()
+		// 	.signInWithPopup(provider)
+		// 	.then((res) => {
+		// 		const login_payload = {
+		// 			uuid: res.user.uid,
+		// 			email: res.user.email,
+		// 			name: res.user.displayName,
+		// 			photoUrl: res.user.photoURL,
+		// 			threadKeys: [],
+		// 			myThread: {},
+		// 			temp: [],
+		// 		};
+		// 		dispatch(addUser(login_payload));
+		// 		dispatch(setCurrentUser(login_payload));
+		// 		Router.push("/init");
+		// 	});
+		const login_payload = {
+			uuid: "bRPleP6CYGMgNqWTEFzjdEpAQYZ2",
+			email: "peration0422@gmail.com",
+			name: "sungmin jee",
+			photoUrl:
+				"https://lh3.googleusercontent.com/a-/AOh14Gjwk0opSq_YqsaT_N72cgQkMpItkgk1PhBV01Ze=s96-c",
+			threadKeys: [],
+			myThread: {},
+			temp: [],
+		};
+		dispatch(addUser(login_payload));
+		dispatch(setCurrentUser(login_payload));
+		Router.push("/init");
 	};
 
 	return (
