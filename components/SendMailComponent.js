@@ -43,8 +43,8 @@ const SendMailComponent = () => {
 			const receiver = {
 				uuid: uuidv4(),
 				email: mail.receiver,
-				name: "unknown",
-				photoUrl: "https://i.stack.imgur.com/l60Hf.png",
+				name: userObjs[mail.receiver].name,
+				photoUrl: userObjs[mail.receiver].photoUrl,
 				threadKeys: [],
 				myThread: {},
 				temp: [],

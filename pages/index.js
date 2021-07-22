@@ -42,7 +42,8 @@ export default function login() {
 			uuid: "bRPleP6CYGMgNqWTEFzjdEpAQYZ2",
 			email: "peration0422@gmail.com",
 			name: "sungmin jee",
-			photoUrl: "https://lh3.googleusercontent.com/a-/AOh14Gjwk0opSq_YqsaT_N72cgQkMpItkgk1PhBV01Ze=s96-c",
+			photoUrl:
+				"https://lh3.googleusercontent.com/a-/AOh14Gjwk0opSq_YqsaT_N72cgQkMpItkgk1PhBV01Ze=s96-c",
 			threadKeys: [],
 			myThread: {},
 			temp: [],
@@ -71,7 +72,7 @@ export default function login() {
 							alt="Picture of the author"
 						/>
 					</div>
-					<h2 class="mb-2 text-xl font-medium">로그인</h2>
+					<h2 class="mb-2 text-xl font-medium">로그인(clone 사이트)</h2>
 					<p class="mb-8">Google 계정 사용</p>
 					<div class="w-full mb-8 relative flex justify-center flex-col">
 						<div
@@ -86,7 +87,7 @@ export default function login() {
 								alt="Picture of the author"
 							/>
 							<div class="w-full flex-shrink text-center">
-								구글 계정으로 로그인
+								기본 계정으로 로그인
 							</div>
 						</div>
 						{/* <div
@@ -104,7 +105,7 @@ export default function login() {
 					</div> */}
 						<div class="w-96 mx-12 text-left mb-8">
 							내 컴퓨터가 아닌가요? 게스트 모드를 사용하여 비공개로
-							로그인하세요.
+							로그인하세요.{" "}
 							<span class="text-blue-600 cursor-pointer">
 								<a href="https://support.google.com/chrome/answer/6130773?hl=ko">
 									자세히 알아보기
